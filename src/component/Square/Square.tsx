@@ -8,7 +8,7 @@ interface SquareProps {
 }
 
 const Square: FunctionComponent<SquareProps> = ({value, onClick}) => {
-  return <div className="square">{value}</div>;
+  return <div className="square" onClick={onClick}>{value}</div>;
   
 };
 

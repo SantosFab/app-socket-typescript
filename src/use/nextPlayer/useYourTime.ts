@@ -1,29 +1,29 @@
 import { useEffect } from "react";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CurrentPlayer } from "../../utils/serverConstants";
-import { YourTime } from "./YourTime";
+import { YourTime } from "./interfaceYourTime";
 
 export type WhoPlays = "X" | "0";
 
 const socket = getSocketInstance();
 
-function getNextPlayer(): Promise<WhoPlays> {
-  return new Promise((resolve) => {
-    socket.on(CurrentPlayer, (arg) => {
-      resolve(arg);
-    });
-  });
-}
-
-const useSocketYourTime = ({ YourTime, setYourTime }: YourTime) =>
+const useSocketYourTime = ({ setYourTime }: YourTime) => {
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await getNextPlayer();
-      setYourTime(result);
+    // Função para lidar com a atualização do estado YourTime
+    const handleCurrentPlayerUpdate = (arg: WhoPlays) => {
+      setYourTime(arg);
     };
-    fetchData();
 
-    return () => {};
-  }, [setYourTime]);
+    // Configurar o ouvinte de eventos para CurrentPlayer
+    socket.on(CurrentPlayer, (arg) => {
+      handleCurrentPlayerUpdate(arg);
+    });
+
+    // Retorno do useEffect: Limpar o ouvinte quando o componente for desmontado
+    return () => {
+      socket.off(CurrentPlayer, handleCurrentPlayerUpdate);
+    };
+  }, [setYourTime]); // Executar o useEffect sempre que setYourTime mudar
+};
 
 export default useSocketYourTime;

@@ -1,19 +1,20 @@
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
+
 const {
-  state,
   connection,
   disconnect,
   clientDisconnecting,
   YourInfor,
+  state,
   PORT,
   CurrentPlayer,
+  ChangePlayer,
 } = require("../utils/serverConstants.js");
 
 const app = express();
 const server = http.createServer(app);
-
 const io = socketIo(server, {
   cors: {
     origin: "http://localhost:3000",
@@ -23,10 +24,11 @@ const io = socketIo(server, {
 
 let symbolArray = ["X", "0"];
 let gameState = Array(9).fill("");
-let playerSymbol = "X";
+let currentPlayer = "X"; // Iniciar com o jogador "X"
 
 io.on(connection, (socket) => {
   console.log("conectado");
+
   if (symbolArray.length > 0) {
     const firstElement = symbolArray[0];
     symbolArray = symbolArray.slice(1);
@@ -34,31 +36,29 @@ io.on(connection, (socket) => {
   } else {
     socket.emit(YourInfor, "Aguarde até que um usuário saia do sistema");
   }
-});
 
-//initialState
-io.on(connection, (socket) => {
+  // Emitir o estado inicial do jogo para o novo jogador
   socket.emit(state, gameState);
-});
 
-//resertar state
-io.on(connection, (socket) => {
+  // Resertar o estado do jogo quando um jogador se desconectar
   socket.on(disconnect, () => {
     gameState = Array(9).fill("");
     io.emit(state, gameState);
   });
-});
 
-//resertar array
-io.on(connection, (socket) => {
+  // Adicionar o jogador que se desconectou de volta ao array de símbolos disponíveis
   socket.on(clientDisconnecting, (arg) => {
     symbolArray = [...symbolArray, arg];
   });
-});
 
-//próximo a jogar
-io.on(connection, (socket) => {
-  socket.emit(CurrentPlayer, playerSymbol);
+  // Lidar com a mudança de jogador
+  socket.on(ChangePlayer, (symbol) => {
+    currentPlayer = symbol; // Atualizar o jogador atual
+    io.emit(CurrentPlayer, currentPlayer); // Emitir o novo jogador para todos os clientes
+  });
+
+  // Enviar o jogador atual para o novo cliente
+  socket.emit(CurrentPlayer, currentPlayer);
 });
 
 server.listen(PORT, () => {

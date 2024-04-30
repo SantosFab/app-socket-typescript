@@ -11,14 +11,14 @@ function App() {
 
   useSocketGetSymbol({ setSymbol: setSymbol });
   useSocketDesconected({ setSymbol: setSymbol, Symbol: Symbol });
-  useSocketYourTime({ setYourTime: setYourTime, YourTime: YourTime });
+  useSocketYourTime({ setYourTime: setYourTime });
 
   return (
     <div className="App">
       <h1>Bem-vindo ao jogo da velha</h1>
       <p>Você é o: {Symbol}</p>
       <p>O próximo jogar a jogar é:{YourTime}</p>
-      <Board symbol={Symbol} />
+      <Board symbol={YourTime} />
     </div>
   );
 }

@@ -5,6 +5,7 @@ const clientDisconnecting = "clientDisconnecting";
 const YourInfor = "YourInfor";
 const PORT = process.env.PORT || 4000;
 const CurrentPlayer = "CurrentPlayer";
+const ChangePlayer = 'changePlayer'
 
 module.exports = {
   state,
@@ -14,4 +15,5 @@ module.exports = {
   YourInfor,
   PORT,
   CurrentPlayer,
+  ChangePlayer,
 };

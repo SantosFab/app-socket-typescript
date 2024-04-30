@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import Square from "../Square/Square";
 import "./Board.css";
-import { handleInitialState } from "./script";
+import { changePlayer, handleInitialState } from "./script";
 
 interface BoardProps {
   symbol: string;
@@ -9,7 +9,9 @@ interface BoardProps {
 
 const Board: FunctionComponent<BoardProps> = ({ symbol }) => {
   const renderSquare = (i: number) => {
-    return <Square value={state[i]} onClick={() => () => "f"} />;
+   
+    
+    return <Square value={state[i]} onClick={() => changePlayer(symbol)} />;
   };
   const [state, setState] = useState<string[]>(Array(9).fill(""));
 
