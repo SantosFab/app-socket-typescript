@@ -1,41 +1,51 @@
 import { FunctionComponent, useState } from "react";
 import Square from "../Square/Square";
 import "./Board.css";
-import { changePlayer } from "./script";
-import useSocketGetState from "../../use/state/useGetState";
+import { changePlayer, initialState } from "./script";
+import useSocketGetState from "../../use/getState/useGetState";
+import useSocketGetCurrentPlayer, {
+  WhoPlays,
+} from "../../use/getCurrentPlayer/useGetCurrentPlayer";
 
 interface BoardProps {
-  currentPlayer: string;
-  symbol: string;
+  Player: string;
 }
 
-const Board: FunctionComponent<BoardProps> = ({ currentPlayer, symbol }) => {
+const Board: FunctionComponent<BoardProps> = ({ Player }) => {
   const renderSquare = (index: number) => {
     return (
       <Square
-        value={state[index]}
-        onClick={() => {
+        value={State[index]}
+        onClick={() =>
           changePlayer({
-            currentPlayer,
+            CurrentPlayer,
+            Player,
+            State,
             index,
-            symbol,
-            state,
-          });
-        }}
+          })
+        }
       />
     );
   };
-  const [state, setState] = useState<string[]>(Array(9).fill(""));
-  const [HasWinner, setHasWinner] = useState<string>("");
-  console.log(state, "no compomente");
 
-  useSocketGetState({ setState, setHasWinner });
+  const newGame = () => (
+    <button onClick={() => initialState({ setHasWinner })}>Novo jogo!!</button>
+  );
+
+  const [State, setState] = useState<string[]>(Array(9).fill(""));
+  const [HasWinner, setHasWinner] = useState<string>("");
+  const [Draw, setDraw] = useState<boolean>(false);
+  const [CurrentPlayer, setCurrentPlayer] = useState<WhoPlays>("X");
+
+  useSocketGetState({ setState, setHasWinner, setDraw });
+  useSocketGetCurrentPlayer({ setCurrentPlayer: setCurrentPlayer });
 
   return (
-    <div>
+    <div className="column">
+      {HasWinner}
       {HasWinner === "" ? (
         <>
-          {symbol === currentPlayer ? (
+          {Player === CurrentPlayer ? (
             <h3>Sua vez de jogar</h3>
           ) : (
             <h3>Aguarde sua vez</h3>
@@ -57,8 +67,21 @@ const Board: FunctionComponent<BoardProps> = ({ currentPlayer, symbol }) => {
           </div>
         </>
       ) : (
-        <p>{HasWinner}</p>
+        <>
+          {HasWinner === Player ? (
+            <p>Parabéns você é o vencedor da rodada!!!</p>
+          ) : (
+            <p>Que pena, você perdeu ;/</p>
+          )}
+          <div>{newGame()}</div>
+        </>
       )}
+      {Draw === true ? (
+        <div className="column">
+          <p>Jogo terminou empatado!</p>
+          <div>{newGame()}</div>
+        </div>
+      ) : null}
     </div>
   );
 };

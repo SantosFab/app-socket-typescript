@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CURRENT_PLAYER } from "../../utils/serverConstants";
-import { CurrentPlayer } from "./interfaceCurrentPlayer";
+import { CurrentPlayer } from "./interfaceGetCurrentPlayer";
 
 export type WhoPlays = "X" | "0";
 
 const socket = getSocketInstance();
 
-const useSocketCurrentPlayer = ({ setCurrentPlayer }: CurrentPlayer) => {
+const useSocketGetCurrentPlayer = ({ setCurrentPlayer }: CurrentPlayer) => {
   useEffect(() => {
     // Função para lidar com a atualização do estado YourTime
     const handleCurrentPlayerUpdate = (arg: WhoPlays) => {
@@ -26,4 +26,4 @@ const useSocketCurrentPlayer = ({ setCurrentPlayer }: CurrentPlayer) => {
   }, [setCurrentPlayer]); // Executar o useEffect sempre que setYourTime mudar
 };
 
-export default useSocketCurrentPlayer;
+export default useSocketGetCurrentPlayer;

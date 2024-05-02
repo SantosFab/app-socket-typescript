@@ -3,15 +3,20 @@ const http = require("http");
 const socketIo = require("socket.io");
 
 const {
+  CURRENT_DRAW,
+  CHANGE_DRAW,
+  CURRENT_PLAYER,
+  CHANGE_PLAYER,
+  CURRENT_STATE,
+  CHANGE_STATE,
+  WINNER,
   CONNECTION,
   DISCONNECT,
-  CURRENT_PLAYER,
-  CURRENT_STATE,
-  CHANGE_PLAYER,
-  CHANGE_STATE,
-  PORT,
-  YOUR_INFOR,
   CLIENT_DISCONNECTING,
+  YOUR_INFOR,
+  PORT,
+  CURRENT_WINNER,
+  CHANGE_WINNER,
 } = require("../utils/serverConstants.js");
 
 const app = express();
@@ -23,11 +28,15 @@ const io = socketIo(server, {
   },
 });
 
-const initialState = Array(9).fill("");
+//const initialState = Array(9).fill("");
+//const initialState = ["X", "0", "X", "X", "0", "X", "0", "X", "0"];
+const initialState = ["X", "X", "", "0", "0", "", "", "", ""];
 
 let symbolArray = ["X", "0"];
 let gameState = initialState;
 let currentPlayer = "X";
+let draw = false;
+let winner = false;
 
 io.on(CONNECTION, (socket) => {
   console.log("conectado");
@@ -42,9 +51,28 @@ io.on(CONNECTION, (socket) => {
 
   //emitir estado inicial
   socket.emit(CURRENT_STATE, gameState);
+
+  //emitir draw inicial
+  socket.emit(CURRENT_DRAW, draw);
+
+  //emitir winner
+  socket.emit(CURRENT_WINNER, winner);
+
   // Emitir mudanças no estado jogo para o novo jogador
   socket.on(CHANGE_STATE, (newState) => {
-    io.emit(CURRENT_STATE, newState);
+    gameState = newState;
+    console.log(gameState, "novo estado");
+    io.emit(CURRENT_STATE, gameState);
+  });
+
+  socket.on(CHANGE_DRAW, (newDraw) => {
+    console.log(newDraw, "draw");
+    draw = newDraw;
+    io.emit(CURRENT_DRAW, newDraw);
+  });
+
+  socket.on(CHANGE_WINNER, (newWinner) => {
+    io.emit(CURRENT_WINNER, newWinner);
   });
 
   // Resertar o estado do jogo quando um jogador se desconectar

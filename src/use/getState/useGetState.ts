@@ -1,24 +1,37 @@
 import { useEffect } from "react";
-import { interfaceGetState } from "./interfaceState";
-import { CURRENT_STATE } from "../../utils/serverConstants";
+import { interfaceGetState } from "./interfaceGetState";
+import {
+  CHANGE_DRAW,
+  CURRENT_DRAW,
+  CURRENT_STATE,
+} from "../../utils/serverConstants";
 import { getSocketInstance } from "../../server/instance/socket";
 
 const socket = getSocketInstance();
 
-const useSocketGetState = ({ setState, setHasWinner }: interfaceGetState) =>
+const useSocketGetState = ({
+  setState,
+  setHasWinner,
+  setDraw,
+}: interfaceGetState) =>
   useEffect(() => {
     const handleCurrentStateUpdate = (state: string[]) => {
       setState(state);
     };
-    socket.on(CURRENT_STATE, (state) => {
+    socket.on(CURRENT_STATE, (state: string[]) => {
       handleCurrentStateUpdate(state);
       checkWinner({ state, setHasWinner });
+      
+    });
+    
+    socket.on(CURRENT_DRAW, (draw: boolean) => {
+      setDraw(draw);
     });
 
     return () => {
       socket.off(CURRENT_STATE);
     };
-  }, [setState, setHasWinner]);
+  }, [setState, setHasWinner, setDraw]);
 
 function checkWinner({
   state,
@@ -44,17 +57,16 @@ function checkWinner({
   for (let condition of winningConditions) {
     const [a, b, c] = condition;
     if (state[a] && state[a] === state[b] && state[a] === state[c]) {
-      // Retorna o jogador vencedor (X ou O)
-      setHasWinner("O vencedor é: " + state[a]);
+      setHasWinner(state[a]);
     }
   }
 
   // Se não houver vencedor e ainda houver espaços vazios, o jogo continua
   if (state.includes("")) {
-    return false; // Ainda não há vencedor
+    return;
   } else {
     // O jogo termina em empate
-    setHasWinner("Empate");
+    socket.emit(CHANGE_DRAW, true);
   }
 }
 
