@@ -1,19 +1,21 @@
-const state = "gameState";
-const connection = "connection";
-const disconnect = "disconnect";
-const clientDisconnecting = "clientDisconnecting";
-const YourInfor = "YourInfor";
+const CURRENT_STATE = "gameState";
+const CHANGE_STATE = "currentState";
+const CONNECTION = "connection";
+const DISCONNECT = "disconnect";
+const CLIENT_DISCONNECTING = "clientDisconnecting";
+const YOUR_INFOR = "YourInfor";
 const PORT = process.env.PORT || 4000;
-const CurrentPlayer = "CurrentPlayer";
-const ChangePlayer = 'changePlayer'
+const CURRENT_PLAYER = "CurrentPlayer";
+const CHANGE_PLAYER = "changePlayer";
 
 module.exports = {
-  state,
-  connection,
-  disconnect,
-  clientDisconnecting,
-  YourInfor,
-  PORT,
-  CurrentPlayer,
-  ChangePlayer,
+  CHANGE_PLAYER,
+  CURRENT_PLAYER,
+  CURRENT_STATE,
+  CHANGE_STATE,
+  CONNECTION,
+  DISCONNECT,
+  CLIENT_DISCONNECTING,
+  YOUR_INFOR,
+  PORT
 };

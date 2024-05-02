@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { getSocketInstance } from "../../server/instance/socket";
-import { CurrentPlayer } from "../../utils/serverConstants";
+import { CURRENT_PLAYER } from "../../utils/serverConstants";
 import { YourTime } from "./interfaceYourTime";
 
 export type WhoPlays = "X" | "0";
@@ -15,13 +15,13 @@ const useSocketYourTime = ({ setYourTime }: YourTime) => {
     };
 
     // Configurar o ouvinte de eventos para CurrentPlayer
-    socket.on(CurrentPlayer, (arg) => {
+    socket.on(CURRENT_PLAYER, (arg) => {
       handleCurrentPlayerUpdate(arg);
     });
 
     // Retorno do useEffect: Limpar o ouvinte quando o componente for desmontado
     return () => {
-      socket.off(CurrentPlayer, handleCurrentPlayerUpdate);
+      socket.off(CURRENT_PLAYER);
     };
   }, [setYourTime]); // Executar o useEffect sempre que setYourTime mudar
 };

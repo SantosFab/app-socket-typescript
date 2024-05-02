@@ -3,14 +3,15 @@ const http = require("http");
 const socketIo = require("socket.io");
 
 const {
-  connection,
-  disconnect,
-  clientDisconnecting,
-  YourInfor,
-  state,
+  CONNECTION,
+  DISCONNECT,
+  CURRENT_PLAYER,
+  CURRENT_STATE,
+  CHANGE_PLAYER,
+  CHANGE_STATE,
   PORT,
-  CurrentPlayer,
-  ChangePlayer,
+  YOUR_INFOR,
+  CLIENT_DISCONNECTING,
 } = require("../utils/serverConstants.js");
 
 const app = express();
@@ -23,42 +24,44 @@ const io = socketIo(server, {
 });
 
 let symbolArray = ["X", "0"];
-let gameState = Array(9).fill("");
+let gameState = Array(9).fill("y");
 let currentPlayer = "X"; // Iniciar com o jogador "X"
 
-io.on(connection, (socket) => {
+io.on(CONNECTION, (socket) => {
   console.log("conectado");
 
   if (symbolArray.length > 0) {
     const firstElement = symbolArray[0];
     symbolArray = symbolArray.slice(1);
-    socket.emit(YourInfor, socket.id, firstElement);
+    socket.emit(YOUR_INFOR, socket.id, firstElement);
   } else {
-    socket.emit(YourInfor, "Aguarde até que um usuário saia do sistema");
+    socket.emit(YOUR_INFOR, "Aguarde até que um usuário saia do sistema");
   }
 
   // Emitir o estado inicial do jogo para o novo jogador
-  socket.emit(state, gameState);
+  socket.on(CHANGE_STATE, () => {
+    socket.emit(CURRENT_STATE, gameState);
+  });
 
   // Resertar o estado do jogo quando um jogador se desconectar
-  socket.on(disconnect, () => {
+  socket.on(DISCONNECT, () => {
     gameState = Array(9).fill("");
-    io.emit(state, gameState);
+    io.emit(CURRENT_STATE, gameState);
   });
 
   // Adicionar o jogador que se desconectou de volta ao array de símbolos disponíveis
-  socket.on(clientDisconnecting, (arg) => {
+  socket.on(CLIENT_DISCONNECTING, (arg) => {
     symbolArray = [...symbolArray, arg];
   });
 
   // Lidar com a mudança de jogador
-  socket.on(ChangePlayer, (symbol) => {
+  socket.on(CHANGE_PLAYER, (symbol) => {
     currentPlayer = symbol; // Atualizar o jogador atual
-    io.emit(CurrentPlayer, currentPlayer); // Emitir o novo jogador para todos os clientes
+    io.emit(CURRENT_PLAYER, currentPlayer); // Emitir o novo jogador para todos os clientes
   });
 
   // Enviar o jogador atual para o novo cliente
-  socket.emit(CurrentPlayer, currentPlayer);
+  socket.emit(CURRENT_PLAYER, currentPlayer);
 });
 
 server.listen(PORT, () => {

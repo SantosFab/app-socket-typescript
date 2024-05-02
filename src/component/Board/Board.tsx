@@ -4,14 +4,24 @@ import "./Board.css";
 import { changePlayer, handleInitialState } from "./script";
 
 interface BoardProps {
+  currentPlayer: string;
   symbol: string;
 }
 
-const Board: FunctionComponent<BoardProps> = ({ symbol }) => {
+const Board: FunctionComponent<BoardProps> = ({ currentPlayer, symbol }) => {
   const renderSquare = (i: number) => {
-   
-    
-    return <Square value={state[i]} onClick={() => changePlayer(symbol)} />;
+    return (
+      <Square
+        value={state[i]}
+        onClick={() =>
+          changePlayer({
+            currentPlayer: currentPlayer,
+            index: i,
+            symbol: symbol,
+          })
+        }
+      />
+    );
   };
   const [state, setState] = useState<string[]>(Array(9).fill(""));
 

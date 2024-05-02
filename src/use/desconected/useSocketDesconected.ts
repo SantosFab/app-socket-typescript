@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { getSocketInstance } from "../../server/instance/socket";
-import { clientDisconnecting } from "../../utils/serverConstants";
+import { CLIENT_DISCONNECTING } from "../../utils/serverConstants";
 import { interfaceDesconected } from "./interfaceDesconected";
 
 const socket = getSocketInstance();
 
 function disconected(arg: string) {
-  socket.emit(clientDisconnecting, arg);
+  socket.emit(CLIENT_DISCONNECTING, arg);
   socket.disconnect();
 }
 
