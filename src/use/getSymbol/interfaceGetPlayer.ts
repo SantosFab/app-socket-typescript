@@ -1,4 +1,3 @@
-export interface interfaceDesconected {
-  Player: string;
+export interface interfaceGetPlayer {
   setPlayer: React.Dispatch<React.SetStateAction<string>>;
 }

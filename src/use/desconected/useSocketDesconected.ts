@@ -11,23 +11,23 @@ function disconected(arg: string) {
 }
 
 const useSocketDesconected = ({
-  Symbol: symbol,
+  Player,
 }: interfaceDesconected): void => {
   useEffect(() => {
     const handleBeforeUnload = () => {
-      if (symbol === "X" || symbol === "0") {
-        disconected(symbol);
+      if (Player === "X" || Player === "0") {
+        disconected(Player);
       }
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
-      if (symbol === "X" || symbol === "0") {
-        disconected(symbol);
+      if (Player === "X" || Player === "0") {
+        disconected(Player);
       }
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [symbol, ]);
+  }, [Player, ]);
 };
 export default useSocketDesconected;

@@ -23,9 +23,11 @@ const io = socketIo(server, {
   },
 });
 
+const initialState = Array(9).fill("");
+
 let symbolArray = ["X", "0"];
-let gameState = Array(9).fill("y");
-let currentPlayer = "X"; // Iniciar com o jogador "X"
+let gameState = initialState;
+let currentPlayer = "X";
 
 io.on(CONNECTION, (socket) => {
   console.log("conectado");
@@ -38,20 +40,24 @@ io.on(CONNECTION, (socket) => {
     socket.emit(YOUR_INFOR, "Aguarde até que um usuário saia do sistema");
   }
 
-  // Emitir o estado inicial do jogo para o novo jogador
-  socket.on(CHANGE_STATE, () => {
-    socket.emit(CURRENT_STATE, gameState);
+  //emitir estado inicial
+  socket.emit(CURRENT_STATE, gameState);
+  // Emitir mudanças no estado jogo para o novo jogador
+  socket.on(CHANGE_STATE, (newState) => {
+    io.emit(CURRENT_STATE, newState);
   });
 
   // Resertar o estado do jogo quando um jogador se desconectar
   socket.on(DISCONNECT, () => {
-    gameState = Array(9).fill("");
+    gameState = initialState;
     io.emit(CURRENT_STATE, gameState);
   });
 
   // Adicionar o jogador que se desconectou de volta ao array de símbolos disponíveis
   socket.on(CLIENT_DISCONNECTING, (arg) => {
     symbolArray = [...symbolArray, arg];
+    gameState = initialState;
+    io.emit(CURRENT_STATE, gameState);
   });
 
   // Lidar com a mudança de jogador

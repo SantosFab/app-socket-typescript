@@ -1,24 +1,24 @@
 import { useState } from "react";
 import Board from "./component/Board/Board";
 import "./App.css";
-import useSocketGetSymbol from "./use/getSymbol/useSocketGetSymbol";
+import useSocketGetPlayer from "./use/getSymbol/useSocketGetPlayer";
 import useSocketDesconected from "./use/desconected/useSocketDesconected";
-import useSocketYourTime, { WhoPlays } from "./use/nextPlayer/useYourTime";
+import useSocketCurrentPlayer, {
+  WhoPlays,
+} from "./use/currentPlayer/useCurrentPlayer";
 
 function App() {
-  const [Symbol, setSymbol] = useState<string>("");
-  const [YourTime, setYourTime] = useState<WhoPlays>("X");
+  const [Player, setPlayer] = useState<string>("");
+  const [CurrentPlayer, setCurrentPlayer] = useState<WhoPlays>("X");
 
-  useSocketGetSymbol({ setSymbol: setSymbol });
-  useSocketDesconected({ setSymbol: setSymbol, Symbol: Symbol });
-  useSocketYourTime({ setYourTime: setYourTime });
+  useSocketGetPlayer({ setPlayer });
+  useSocketDesconected({ setPlayer, Player });
+  useSocketCurrentPlayer({ setCurrentPlayer });
 
   return (
     <div className="App">
-      <h1>Bem-vindo ao jogo da velha</h1>
-      <p>Você é o: {Symbol}</p>
-      {Symbol === YourTime ? <p>Sua vez de jogar</p> : <p>Aguarde sua vez</p>}
-      <Board currentPlayer={YourTime} symbol={Symbol} />
+      <h1>Você é o jogador - {Player}</h1>
+      <Board currentPlayer={CurrentPlayer} symbol={Player} />
     </div>
   );
 }
