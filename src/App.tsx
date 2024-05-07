@@ -3,7 +3,7 @@ import "./App.css";
 import useSocketRoomList from "./use/getRoomList/useSocketGetRoomList";
 import { RoomList } from "./use/getRoomList/interfaceGetRoomList";
 import NewRoomModal from "./component/NewRoomModal/NewRoomModal";
-import { Button, Row, Col } from "react-bootstrap";
+import { Button, Container, Row } from "react-bootstrap";
 import RoomCard from "./component/RoomCard/RoomCard";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
   useSocketRoomList({ setRoomList });
 
   return (
-    <div className="App">
+    <Container className="App">
       <Row>
         {RoomList.map((room, index) => (
           <RoomCard room={room} key={`${room.id}${index}`} />
@@ -24,7 +24,7 @@ function App() {
         showModal={ShowNewRoomModal}
       />
       <Button onClick={() => setShowNewRoomModal(true)}>Criar nova sala</Button>
-    </div>
+    </Container>
   );
 }
 

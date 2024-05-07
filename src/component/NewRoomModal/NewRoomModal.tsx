@@ -1,6 +1,7 @@
 import React from "react";
-import { Col, Row, Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 import { useMyFormik } from "./script";
+import "./NewRoomModal.css";
 
 interface NewRoomModalProps {
   setShowNewRoomModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,6 +20,7 @@ const NewRoomModal: React.FunctionComponent<NewRoomModalProps> = ({
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      className="d-flex justify-content-center align-items-center"
     >
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -27,9 +29,9 @@ const NewRoomModal: React.FunctionComponent<NewRoomModalProps> = ({
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <Row className="mb-2">
-            <Form.Group as={Col} md="4" controlId="formRoomName">
-              <Form.Label>Nome da sala</Form.Label>
+          <Row>
+            <Form.Group as={Col} controlId="formRoomName">
+              <Form.Label className="w-100">Nome da sala</Form.Label>
               <Form.Control
                 type="text"
                 name="roomName"
@@ -40,6 +42,7 @@ const NewRoomModal: React.FunctionComponent<NewRoomModalProps> = ({
                   !formik.errors.roomName &&
                   formik.values.roomName.length > 3
                 }
+                className="w-100"
               />
               {formik.touched.roomName && formik.errors.roomName ? (
                 <Form.Text className="text-danger">
@@ -47,8 +50,10 @@ const NewRoomModal: React.FunctionComponent<NewRoomModalProps> = ({
                 </Form.Text>
               ) : null}
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="formNickNameOne">
-              <Form.Label>Apelido</Form.Label>
+          </Row>
+          <Row>
+            <Form.Group as={Col} controlId="formNickNameOne">
+              <Form.Label className="w-100">Apelido</Form.Label>
               <Form.Control
                 type="text"
                 name="nickNameOne"
@@ -59,6 +64,7 @@ const NewRoomModal: React.FunctionComponent<NewRoomModalProps> = ({
                   !formik.errors.nickNameOne &&
                   formik.values.nickNameOne.length > 3
                 }
+                className="w-100"
               />
               {formik.touched.nickNameOne && formik.errors.nickNameOne ? (
                 <Form.Text className="text-danger">
@@ -66,14 +72,17 @@ const NewRoomModal: React.FunctionComponent<NewRoomModalProps> = ({
                 </Form.Text>
               ) : null}
             </Form.Group>
+          </Row>
+          <Row>
             <Form.Group as={Col} controlId="formPieceOne">
-              <Form.Label>Peça</Form.Label>
+              <Form.Label className="w-100">Peça</Form.Label>
               <Form.Control
                 as="select"
                 name="pieceOne"
                 value={formik.values.pieceOne}
                 onChange={formik.handleChange}
                 isValid={formik.touched.pieceOne && !formik.errors.pieceOne}
+                className="w-100"
               >
                 <option value="" disabled>
                   ---Selecionar peça---
