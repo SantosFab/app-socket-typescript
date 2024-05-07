@@ -7,31 +7,14 @@ import useSocketGetCurrentPlayer, {
   WhoPlays,
 } from "../../use/getCurrentPlayer/useGetCurrentPlayer";
 
-interface BoardProps {
-  Player: string;
-}
+interface BoardProps {}
 
-const Board: FunctionComponent<BoardProps> = ({ Player }) => {
+const Board: FunctionComponent<BoardProps> = () => {
   const renderSquare = (index: number) => {
-    return (
-      <Square
-        value={State[index]}
-        onClick={() =>
-          changePlayer({
-            CurrentPlayer,
-            Player,
-            State,
-            index,
-          })
-        }
-      />
-    );
+    return <Square value={State[index]} onClick={() => console.log("test")} />;
   };
 
-  const newGame = () => (
-    <button onClick={() => initialState({ setHasWinner })}>Novo jogo!!</button>
-  );
-
+ 
   const [State, setState] = useState<string[]>(Array(9).fill(""));
   const [HasWinner, setHasWinner] = useState<string>("");
   const [Draw, setDraw] = useState<boolean>(false);
@@ -43,7 +26,7 @@ const Board: FunctionComponent<BoardProps> = ({ Player }) => {
   return (
     <div className="column">
       {HasWinner}
-      {HasWinner === "" ? (
+      {/* {HasWinner === "" ? (
         <>
           {Player === CurrentPlayer ? (
             <h3>Sua vez de jogar</h3>
@@ -81,7 +64,7 @@ const Board: FunctionComponent<BoardProps> = ({ Player }) => {
           <p>Jogo terminou empatado!</p>
           <div>{newGame()}</div>
         </div>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };

@@ -9,7 +9,8 @@ const CHANGE_WINNER = "changeWinner";
 const CONNECTION = "connection";
 const DISCONNECT = "disconnect";
 const CLIENT_DISCONNECTING = "clientDisconnecting";
-const YOUR_INFOR = "YourInfor";
+const CURRENT_ROOM_LIST = "currentRoomList";
+const CHANGE_ROOM_LIST = "changeRoomList";
 const PORT = process.env.PORT || 4000;
 
 module.exports = {
@@ -21,9 +22,10 @@ module.exports = {
   CHANGE_STATE,
   CURRENT_WINNER,
   CHANGE_WINNER,
+  CURRENT_ROOM_LIST,
+  CHANGE_ROOM_LIST,
   CONNECTION,
   DISCONNECT,
   CLIENT_DISCONNECTING,
-  YOUR_INFOR,
   PORT,
 };

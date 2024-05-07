@@ -9,7 +9,6 @@ const {
   CHANGE_PLAYER,
   CURRENT_STATE,
   CHANGE_STATE,
-  WINNER,
   CONNECTION,
   DISCONNECT,
   CLIENT_DISCONNECTING,
@@ -17,6 +16,8 @@ const {
   PORT,
   CURRENT_WINNER,
   CHANGE_WINNER,
+  CURRENT_ROOM_LIST,
+  CHANGE_ROOM_LIST,
 } = require("../utils/serverConstants.js");
 
 const app = express();
@@ -28,27 +29,20 @@ const io = socketIo(server, {
   },
 });
 
-//const initialState = Array(9).fill("");
-//const initialState = ["X", "0", "X", "X", "0", "X", "0", "X", "0"];
-const initialState = ["X", "X", "", "0", "0", "", "", "", ""];
-
-let symbolArray = ["X", "0"];
-let gameState = initialState;
-let currentPlayer = "X";
-let draw = false;
-let winner = false;
+let roomList = [];
 
 io.on(CONNECTION, (socket) => {
   console.log("conectado");
 
-  if (symbolArray.length > 0) {
-    const firstElement = symbolArray[0];
-    symbolArray = symbolArray.slice(1);
-    socket.emit(YOUR_INFOR, socket.id, firstElement);
-  } else {
-    socket.emit(YOUR_INFOR, "Aguarde até que um usuário saia do sistema");
-  }
+  io.emit(CURRENT_ROOM_LIST, roomList);
 
+  socket.on(CHANGE_ROOM_LIST, (newRoomList, callback) => {
+    roomList = [...roomList, newRoomList];
+    io.emit(CURRENT_ROOM_LIST, roomList);
+    callback();
+  });
+
+  /* 
   //emitir estado inicial
   socket.emit(CURRENT_STATE, gameState);
 
@@ -95,7 +89,7 @@ io.on(CONNECTION, (socket) => {
   });
 
   // Enviar o jogador atual para o novo cliente
-  socket.emit(CURRENT_PLAYER, currentPlayer);
+  socket.emit(CURRENT_PLAYER, currentPlayer); */
 });
 
 server.listen(PORT, () => {

@@ -1,0 +1,17 @@
+.RoomCard {
+  margin: 10px;
+}
+
+.RoomCard .card-body {
+  height: 166px;
+}
+
+.RoomCard .card-text {
+  padding-left: 2px;
+  height: 48px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

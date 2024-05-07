@@ -1,19 +1,29 @@
 import { useState } from "react";
-import Board from "./component/Board/Board";
 import "./App.css";
-import useSocketGetPlayer from "./use/getSymbol/useSocketGetPlayer";
-import useSocketDesconected from "./use/desconected/useSocketDesconected";
+import useSocketRoomList from "./use/getRoomList/useSocketGetRoomList";
+import { RoomList } from "./use/getRoomList/interfaceGetRoomList";
+import NewRoomModal from "./component/NewRoomModal/NewRoomModal";
+import { Button, Row, Col } from "react-bootstrap";
+import RoomCard from "./component/RoomCard/RoomCard";
 
 function App() {
-  const [Player, setPlayer] = useState<string>("");
+  const [RoomList, setRoomList] = useState<RoomList[]>([]);
+  const [ShowNewRoomModal, setShowNewRoomModal] = useState<boolean>(false);
 
-  useSocketGetPlayer({ setPlayer });
-  useSocketDesconected({ setPlayer, Player });
+  useSocketRoomList({ setRoomList });
 
   return (
     <div className="App">
-      <h1>Você é o jogador - {Player}</h1>
-      <Board Player={Player} />
+      <Row>
+        {RoomList.map((room, index) => (
+          <RoomCard room={room} key={`${room.id}${index}`} />
+        ))}
+      </Row>
+      <NewRoomModal
+        setShowNewRoomModal={setShowNewRoomModal}
+        showModal={ShowNewRoomModal}
+      />
+      <Button onClick={() => setShowNewRoomModal(true)}>Criar nova sala</Button>
     </div>
   );
 }
