@@ -1,9 +1,11 @@
 .RoomCard {
   margin: 10px;
+  width: 260px;
 }
 
 .RoomCard .card-body {
   height: 166px;
+ 
 }
 
 .RoomCard .card-text {

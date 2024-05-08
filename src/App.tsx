@@ -12,16 +12,19 @@ function App() {
 
   useSocketRoomList({ setRoomList });
 
+  console.log(RoomList);
+
   return (
     <Container className="App">
-      <Row>
-        {RoomList.map((room, index) => (
-          <RoomCard room={room} key={`${room.id}${index}`} />
+      <Row  className="d-flex justify-content-start align-items-start">
+        {RoomList.map((room) => (
+          <RoomCard room={room} key={room.id} />
         ))}
       </Row>
       <NewRoomModal
         setShowNewRoomModal={setShowNewRoomModal}
         showModal={ShowNewRoomModal}
+        index={RoomList.length}
       />
       <Button onClick={() => setShowNewRoomModal(true)}>Criar nova sala</Button>
     </Container>

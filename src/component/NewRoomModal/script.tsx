@@ -7,9 +7,10 @@ const socket = getSocketInstance();
 
 interface interfaceMyFormik {
   onClick: React.Dispatch<React.SetStateAction<boolean>>;
+  index: number;
 }
 
-export const useMyFormik = ({ onClick }: interfaceMyFormik) => {
+export const useMyFormik = ({ onClick, index }: interfaceMyFormik) => {
   const schema = yup.object().shape({
     pieceOne: yup.string().required("Por favor, selecione uma peça"),
     roomName: yup.string().required("Por favor, digite o nome da sala"),
@@ -24,8 +25,9 @@ export const useMyFormik = ({ onClick }: interfaceMyFormik) => {
     },
     validationSchema: schema,
     onSubmit: (values, { resetForm }) => {
-      const room = { ...values, id: socket.id };
-      console.log("chamei a função");
+      const id = `${socket.id}${index}`;
+
+      const room = { ...values, id, index };
 
       socket.emit(CHANGE_ROOM_LIST, room, () => {
         onClick(false);

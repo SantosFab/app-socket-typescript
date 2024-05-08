@@ -12,7 +12,7 @@ const RoomCard: FunctionComponent<RoomCardProps> = ({ room }) => {
   const [ShowNewPlayerModal, setShowNewPlayerModal] = useState<boolean>(false);
 
   return (
-    <Col>
+    <Col xs="auto">
       <Card className="RoomCard">
         <Card.Body>
           <Card.Title>{`${room.roomName}`}</Card.Title>
@@ -23,7 +23,7 @@ const RoomCard: FunctionComponent<RoomCardProps> = ({ room }) => {
             room={room}
           ></NewPlayerModal>
           <Button variant="primary" onClick={() => setShowNewPlayerModal(true)}>
-            Go somewhere
+            Entrar
           </Button>
         </Card.Body>
       </Card>

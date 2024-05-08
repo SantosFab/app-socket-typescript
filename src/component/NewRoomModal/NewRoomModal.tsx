@@ -6,13 +6,15 @@ import "./NewRoomModal.css";
 interface NewRoomModalProps {
   setShowNewRoomModal: React.Dispatch<React.SetStateAction<boolean>>;
   showModal: boolean;
+  index: number;
 }
 
 const NewRoomModal: React.FunctionComponent<NewRoomModalProps> = ({
   setShowNewRoomModal,
   showModal,
+  index,
 }) => {
-  const formik = useMyFormik({ onClick: setShowNewRoomModal });
+  const formik = useMyFormik({ onClick: setShowNewRoomModal, index });
 
   return (
     <Modal

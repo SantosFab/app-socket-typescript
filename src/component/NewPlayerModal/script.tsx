@@ -2,14 +2,16 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CHANGE_ROOM_LIST } from "../../utils/serverConstants";
+import { RoomList } from "../../use/getRoomList/interfaceGetRoomList";
 
 const socket = getSocketInstance();
 
 interface interfaceMyFormik {
   onClick: React.Dispatch<React.SetStateAction<boolean>>;
+  room: RoomList;
 }
 
-export const useMyFormik = ({ onClick }: interfaceMyFormik) => {
+export const useMyFormik = ({ onClick, room }: interfaceMyFormik) => {
   const schema = yup.object().shape({
     pieceTwo: yup.string().required("Por favor, selecione uma peça"),
     nickNameTwo: yup.string().required("Por favor, digite um apelido"),
@@ -21,17 +23,16 @@ export const useMyFormik = ({ onClick }: interfaceMyFormik) => {
       nickNameTwo: "",
     },
     validationSchema: schema,
-    onSubmit: (values) => {
-      const room = { ...values, id: socket.id };
-      console.log('chamei a função');
-      
-
-      socket.emit(CHANGE_ROOM_LIST, room, () => {onClick(false)
-        console.log('chamei o callback');
-        
-      });
+    onSubmit: (values, { resetForm }) => {
+      const newRoom = { ...values, ...room };
+      console.log(newRoom);
+      //resetForm();
     },
   });
 
   return formik;
 };
+
+export function whatIsThePiece(params: string): string {
+  return params === "X" ? "0" : "X";
+}
