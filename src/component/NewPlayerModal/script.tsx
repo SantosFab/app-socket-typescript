@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CHANGE_ROOM_LIST } from "../../utils/serverConstants";
-import { RoomList } from "../../use/getRoomList/interfaceGetRoomList";
+import { RoomList } from "../../use/getRoomList/useSocketGetRoomList";
 
 const socket = getSocketInstance();
 

@@ -26,6 +26,7 @@ const Board: FunctionComponent<BoardProps> = () => {
   return (
     <div className="column">
       {HasWinner}
+      <div>funci0nando</div>
       {/* {HasWinner === "" ? (
         <>
           {Player === CurrentPlayer ? (

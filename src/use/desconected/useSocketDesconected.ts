@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CLIENT_DISCONNECTING } from "../../utils/serverConstants";
-import { interfaceDesconected } from "./interfaceDesconected";
 
 const socket = getSocketInstance();
 
@@ -10,9 +9,12 @@ function disconected(arg: string) {
   socket.disconnect();
 }
 
-const useSocketDesconected = ({
-  Player,
-}: interfaceDesconected): void => {
+interface interfaceDesconected {
+  Player: string;
+  setPlayer: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const useSocketDesconected = ({ Player }: interfaceDesconected): void => {
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (Player === "X" || Player === "0") {
@@ -28,6 +30,6 @@ const useSocketDesconected = ({
       }
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [Player, ]);
+  }, [Player]);
 };
 export default useSocketDesconected;

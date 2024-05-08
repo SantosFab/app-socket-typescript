@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CURRENT_PLAYER } from "../../utils/serverConstants";
-import { CurrentPlayer } from "./interfaceGetCurrentPlayer";
 
 export type WhoPlays = "X" | "0";
+
+interface CurrentPlayer {
+  setCurrentPlayer: React.Dispatch<React.SetStateAction<WhoPlays>>;
+}
 
 const socket = getSocketInstance();
 

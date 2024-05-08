@@ -1,8 +1,8 @@
 import { FunctionComponent, useState } from "react";
 import { Button, Card, Col } from "react-bootstrap";
 import "./RoomCard.css";
-import { RoomList } from "../../use/getRoomList/interfaceGetRoomList";
 import NewPlayerModal from "../NewPlayerModal/NewPlayerModal";
+import { RoomList } from "../../use/getRoomList/useSocketGetRoomList";
 
 interface RoomCardProps {
   room: RoomList;

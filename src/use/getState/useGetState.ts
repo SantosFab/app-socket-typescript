@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { interfaceGetState } from "./interfaceGetState";
 import {
   CHANGE_DRAW,
   CURRENT_DRAW,
@@ -8,6 +7,12 @@ import {
 import { getSocketInstance } from "../../server/instance/socket";
 
 const socket = getSocketInstance();
+
+interface interfaceGetState {
+  setState: React.Dispatch<React.SetStateAction<string[]>>;
+  setHasWinner: React.Dispatch<React.SetStateAction<string>>;
+  setDraw: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 const useSocketGetState = ({
   setState,
@@ -21,9 +26,8 @@ const useSocketGetState = ({
     socket.on(CURRENT_STATE, (state: string[]) => {
       handleCurrentStateUpdate(state);
       checkWinner({ state, setHasWinner });
-      
     });
-    
+
     socket.on(CURRENT_DRAW, (draw: boolean) => {
       setDraw(draw);
     });
