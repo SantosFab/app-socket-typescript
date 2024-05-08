@@ -1,22 +1,22 @@
-import { useState } from "react";
-import "./App.css";
-import useSocketRoomList from "./use/getRoomList/useSocketGetRoomList";
-import { RoomList } from "./use/getRoomList/interfaceGetRoomList";
-import NewRoomModal from "./component/NewRoomModal/NewRoomModal";
+import { FunctionComponent, useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
-import RoomCard from "./component/RoomCard/RoomCard";
+import useSocketRoomList from "../use/getRoomList/useSocketGetRoomList";
+import RoomCard from "../component/RoomCard/RoomCard";
+import NewRoomModal from "../component/NewRoomModal/NewRoomModal";
+import { RoomList } from "../use/getRoomList/interfaceGetRoomList";
+import './RoomPage.css'
 
-function App() {
+interface RoomPageProps {}
+
+const RoomPage: FunctionComponent<RoomPageProps> = () => {
   const [RoomList, setRoomList] = useState<RoomList[]>([]);
   const [ShowNewRoomModal, setShowNewRoomModal] = useState<boolean>(false);
 
   useSocketRoomList({ setRoomList });
 
-  console.log(RoomList);
-
   return (
-    <Container className="App">
-      <Row  className="d-flex justify-content-start align-items-start">
+    <Container className="RoomPage">
+      <Row className="d-flex justify-content-start align-items-start">
         {RoomList.map((room) => (
           <RoomCard room={room} key={room.id} />
         ))}
@@ -29,6 +29,6 @@ function App() {
       <Button onClick={() => setShowNewRoomModal(true)}>Criar nova sala</Button>
     </Container>
   );
-}
+};
 
-export default App;
+export default RoomPage;
