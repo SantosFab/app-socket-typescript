@@ -1,8 +1,9 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { getSocketInstance } from "../../server/instance/socket";
-import { CHANGE_ROOM_LIST } from "../../utils/serverConstants";
+import { CHANGE_START_GAMER } from "../../utils/serverConstants";
 import { RoomList } from "../../use/getRoomList/useSocketGetRoomList";
+import { useNavigate } from "react-router-dom";
 
 const socket = getSocketInstance();
 
@@ -12,6 +13,7 @@ interface interfaceMyFormik {
 }
 
 export const useMyFormik = ({ onClick, room }: interfaceMyFormik) => {
+  const navigate = useNavigate();
   const schema = yup.object().shape({
     pieceTwo: yup.string().required("Por favor, selecione uma peça"),
     nickNameTwo: yup.string().required("Por favor, digite um apelido"),
@@ -24,9 +26,15 @@ export const useMyFormik = ({ onClick, room }: interfaceMyFormik) => {
     },
     validationSchema: schema,
     onSubmit: (values, { resetForm }) => {
-      const newRoom = { ...values, ...room };
+      const newRoom: RoomList = { ...values, ...room, idPlayerTwo: socket.id };
+
       console.log(newRoom);
-      //resetForm();
+
+      socket.emit(CHANGE_START_GAMER, newRoom, newRoom.index, () => {
+        onClick(false);
+        resetForm();
+        navigate(`/GameRoom/${newRoom.id}/${newRoom.pieceTwo}`);
+      });
     },
   });
 

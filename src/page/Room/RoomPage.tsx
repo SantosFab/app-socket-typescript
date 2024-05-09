@@ -2,9 +2,9 @@ import { FunctionComponent, useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import useSocketRoomList, {
   RoomList,
-} from "../use/getRoomList/useSocketGetRoomList";
-import RoomCard from "../component/RoomCard/RoomCard";
-import NewRoomModal from "../component/NewRoomModal/NewRoomModal";
+} from "../../use/getRoomList/useSocketGetRoomList";
+import RoomCard from "../../component/RoomCard/RoomCard";
+import NewRoomModal from "../../component/NewRoomModal/NewRoomModal";
 import "./RoomPage.css";
 
 interface RoomPageProps {}

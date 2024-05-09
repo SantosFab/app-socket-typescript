@@ -1,32 +1,35 @@
-import { FunctionComponent, useState } from "react";
-import Square from "../Square/Square";
-import "./Board.css";
-import { changePlayer, initialState } from "./script";
-import useSocketGetState from "../../use/getState/useGetState";
-import useSocketGetCurrentPlayer, {
-  WhoPlays,
-} from "../../use/getCurrentPlayer/useGetCurrentPlayer";
+import { FunctionComponent, useEffect } from "react";
+import { test } from "./script";
+import "./BoardPage.css";
+import { useParams } from "react-router-dom";
+import { getSocketInstance } from "../../server/instance/socket";
 
-interface BoardProps {}
+interface BoardPageProps {}
 
-const Board: FunctionComponent<BoardProps> = () => {
-  const renderSquare = (index: number) => {
+const BoardPage: FunctionComponent<BoardPageProps> = () => {
+  /*  const renderSquare = (index: number) => {
     return <Square value={State[index]} onClick={() => console.log("test")} />;
-  };
+  }; */
+  const params = useParams();
 
- 
-  const [State, setState] = useState<string[]>(Array(9).fill(""));
-  const [HasWinner, setHasWinner] = useState<string>("");
-  const [Draw, setDraw] = useState<boolean>(false);
-  const [CurrentPlayer, setCurrentPlayer] = useState<WhoPlays>("X");
+  const socket = getSocketInstance();
 
-  useSocketGetState({ setState, setHasWinner, setDraw });
-  useSocketGetCurrentPlayer({ setCurrentPlayer: setCurrentPlayer });
+  const id = params.id;
+  const piece = params.piece;
+  
+  useEffect(() => {
+    socket.on("message", (data) => {
+      console.log(data);
+    });
+
+    return () => {
+      socket.off("message");
+    };
+  }, [socket]);
 
   return (
     <div className="column">
-      {HasWinner}
-      <div>funci0nando</div>
+      <button onClick={() => test({ id, piece })}>funci0nando</button>
       {/* {HasWinner === "" ? (
         <>
           {Player === CurrentPlayer ? (
@@ -70,4 +73,4 @@ const Board: FunctionComponent<BoardProps> = () => {
   );
 };
 
-export default Board;
+export default BoardPage;

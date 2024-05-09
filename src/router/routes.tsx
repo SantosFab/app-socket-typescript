@@ -1,14 +1,14 @@
 import { Routes, Route } from "react-router-dom";
-import RoomPage from "../page/RoomPage";
-import Board from "../component/Board/Board";
+import RoomPage from "../page/Room/RoomPage";
+import BoardPage from "../page/Board/BoardPage";
 
 const AppRouter = () => {
   return (
     <Routes>
       <Route index element={<RoomPage />} />
       <Route
-        path="/Playroom/:id"
-        element={<Board />}
+        path="/GameRoom/:id/:piece"
+        element={<BoardPage />}
       ></Route>
     </Routes>
   );

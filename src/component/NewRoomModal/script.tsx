@@ -3,6 +3,7 @@ import * as yup from "yup";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CHANGE_ROOM_LIST } from "../../utils/serverConstants";
 import { RoomList } from "../../use/getRoomList/useSocketGetRoomList";
+import { useNavigate } from "react-router-dom";
 
 const socket = getSocketInstance();
 
@@ -12,6 +13,8 @@ interface interfaceMyFormik {
 }
 
 export const useMyFormik = ({ onClick, index }: interfaceMyFormik) => {
+  const navigate = useNavigate();
+
   const schema = yup.object().shape({
     pieceOne: yup.string().required("Por favor, selecione uma peça"),
     roomName: yup.string().required("Por favor, digite o nome da sala"),
@@ -28,11 +31,12 @@ export const useMyFormik = ({ onClick, index }: interfaceMyFormik) => {
     onSubmit: (values, { resetForm }) => {
       const id = `${socket.id}${index}`;
 
-      const room: RoomList = { ...values, id, index, idPlayerOne:socket.id };
+      const room: RoomList = { ...values, id, index, idPlayerOne: socket.id };
 
       socket.emit(CHANGE_ROOM_LIST, room, () => {
         onClick(false);
         resetForm();
+        navigate(`/GameRoom/${room.id}/${room.pieceOne}`);
       });
     },
   });
