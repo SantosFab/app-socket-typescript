@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Square from "../../component/Square/Square";
 import useSocketGetStateGame, {
   StateGame,
-} from "../../use/getCurrentStateGame/useGetCurrentPlayer";
+} from "../../use/getCurrentStateGame/useGetStateGame";
 import { playerMove } from "./script";
 
 interface BoardPageProps {}

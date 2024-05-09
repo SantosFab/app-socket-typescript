@@ -1,5 +1,5 @@
 import { getSocketInstance } from "../../server/instance/socket";
-import { StateGame } from "../../use/getCurrentStateGame/useGetCurrentPlayer";
+import { StateGame } from "../../use/getCurrentStateGame/useGetStateGame";
 import { CHANGE_STATE_GAME } from "../../utils/serverConstants";
 
 const socket = getSocketInstance();
