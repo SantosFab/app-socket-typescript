@@ -1,12 +1,11 @@
 import { getSocketInstance } from "../../server/instance/socket";
+import { TypePiece } from "../../use/WhoPlays/useSocketWhoPlays";
 import {
   CHANGE_STATE_GAME,
   CHANGE_WHO_PLAYS,
 } from "../../utils/serverConstants";
 
 const socket = getSocketInstance();
-
-export type TypePiece = "X" | "0";
 
 interface interfaceChangePlayer {
   id?: string;
@@ -31,13 +30,7 @@ export function playerMove({
     let newStateGame = [...StateGame];
     let newWhoPlays = WhoPlays;
 
-    console.log(newWhoPlays);
-    console.log(id);
-
-    console.log(newStateGame);
     newStateGame[index] = piece;
-
-    console.log(newStateGame);
 
     newWhoPlays = piece === "X" ? "0" : "X";
     console.log(newWhoPlays);

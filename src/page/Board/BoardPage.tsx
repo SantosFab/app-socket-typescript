@@ -3,7 +3,10 @@ import "./BoardPage.css";
 import { useParams } from "react-router-dom";
 import Square from "../../component/Square/Square";
 import useSocketStateGame from "../../use/StateGame/useSocketStateGame";
-import { TypePiece, playerMove } from "./script";
+import { playerMove } from "./script";
+import useSocketWhoPlays, {
+  TypePiece,
+} from "../../use/WhoPlays/useSocketWhoPlays";
 
 interface BoardPageProps {}
 
@@ -18,6 +21,7 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
   const piece = params.piece;
 
   useSocketStateGame({ setStateGame });
+  useSocketWhoPlays({ setWhoPlays });
 
   const renderSquare = (index: number) => {
     return (
