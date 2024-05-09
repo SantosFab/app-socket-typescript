@@ -1,45 +1,30 @@
 import { getSocketInstance } from "../../server/instance/socket";
-import { CHANGE_DRAW } from "../../utils/serverConstants";
+import { StateGame } from "../../use/getCurrentStateGame/useGetCurrentPlayer";
+import { CHANGE_STATE_GAME } from "../../utils/serverConstants";
 
 const socket = getSocketInstance();
 
 interface interfaceChangePlayer {
-  CurrentPlayer: string;
+  id?: string;
   index: number;
-  Player: string;
-  State: string[];
+  piece?: string;
+  StateGame: StateGame;
 }
 
-export function changePlayer({
-  CurrentPlayer,
-  Player,
-  State,
+export function playerMove({
+  id,
   index,
+  piece,
+  StateGame,
 }: interfaceChangePlayer) {
-  if (Player !== CurrentPlayer) {
+  if (piece !== StateGame.whoPlays || piece === undefined || id === undefined) {
     return;
   }
 
-  const newState = [...State];
-  newState[index] = CurrentPlayer;
-  State = newState;
-}
-
-export function initialState({
-  setHasWinner,
-}: {
-  setHasWinner: React.Dispatch<React.SetStateAction<string>>;
-}) {
-  setHasWinner("");
-  socket.emit(CHANGE_DRAW, false);
-}
-
-export function test({
-  id,
-  piece,
-}: {
-  id: string | undefined;
-  piece: string | undefined;
-}) {
-  socket.emit("message", { recipientSocketId: id, message: `Hello! ${piece}` });
+  if (piece === "X" || piece === "0") {
+    let newState = { ...StateGame };
+    newState.state[index] = piece;
+    newState.whoPlays = piece === "X" ? "0" : "X";
+    socket.emit(CHANGE_STATE_GAME, { id, newState });
+  }
 }

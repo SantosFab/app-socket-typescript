@@ -1,74 +1,53 @@
-import { FunctionComponent, useEffect } from "react";
-import { test } from "./script";
+import { FunctionComponent, useState } from "react";
 import "./BoardPage.css";
 import { useParams } from "react-router-dom";
-import { getSocketInstance } from "../../server/instance/socket";
+import Square from "../../component/Square/Square";
+import useSocketGetStateGame, {
+  StateGame,
+} from "../../use/getCurrentStateGame/useGetCurrentPlayer";
+import { playerMove } from "./script";
 
 interface BoardPageProps {}
 
 const BoardPage: FunctionComponent<BoardPageProps> = () => {
-  /*  const renderSquare = (index: number) => {
-    return <Square value={State[index]} onClick={() => console.log("test")} />;
-  }; */
-  const params = useParams();
+  const [StateGame, setStateGame] = useState<StateGame>({
+    state: Array(9).fill(""),
+    whoPlays: "X",
+  });
 
-  const socket = getSocketInstance();
+  const params = useParams();
 
   const id = params.id;
   const piece = params.piece;
-  
-  useEffect(() => {
-    socket.on("message", (data) => {
-      console.log(data);
-    });
 
-    return () => {
-      socket.off("message");
-    };
-  }, [socket]);
+  useSocketGetStateGame({ setStateGame });
+
+  const renderSquare = (index: number) => {
+    return (
+      <Square
+        value={StateGame.state[index]}
+        onClick={() => playerMove({ index, piece, StateGame, id })}
+      />
+    );
+  };
 
   return (
     <div className="column">
-      <button onClick={() => test({ id, piece })}>funci0nando</button>
-      {/* {HasWinner === "" ? (
-        <>
-          {Player === CurrentPlayer ? (
-            <h3>Sua vez de jogar</h3>
-          ) : (
-            <h3>Aguarde sua vez</h3>
-          )}
-          <div className="board-row">
-            {renderSquare(0)}
-            {renderSquare(1)}
-            {renderSquare(2)}
-          </div>
-          <div className="board-row">
-            {renderSquare(3)}
-            {renderSquare(4)}
-            {renderSquare(5)}
-          </div>
-          <div className="board-row">
-            {renderSquare(6)}
-            {renderSquare(7)}
-            {renderSquare(8)}
-          </div>
-        </>
-      ) : (
-        <>
-          {HasWinner === Player ? (
-            <p>Parabéns você é o vencedor da rodada!!!</p>
-          ) : (
-            <p>Que pena, você perdeu ;/</p>
-          )}
-          <div>{newGame()}</div>
-        </>
-      )}
-      {Draw === true ? (
-        <div className="column">
-          <p>Jogo terminou empatado!</p>
-          <div>{newGame()}</div>
-        </div>
-      ) : null} */}
+      <div className="board-row">
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
+      </div>
+      <div className="board-row">
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
+      </div>
+      <div className="board-row">
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
+      </div>
     </div>
   );
 };

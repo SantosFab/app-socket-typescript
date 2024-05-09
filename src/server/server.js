@@ -5,9 +5,11 @@ const socketIo = require("socket.io");
 const {
   CURRENT_ROOM_LIST,
   CHANGE_ROOM_LIST,
-  CHANGE_START_GAMER,
+  CHANGE_INIT_GAME,
   CONNECTION,
   PORT,
+  CURRENT_STATE_GAME,
+  CHANGE_STATE_GAME,
 } = require("../utils/serverConstants.js");
 
 const app = express();
@@ -27,32 +29,33 @@ io.on(CONNECTION, (socket) => {
 
   io.emit(CURRENT_ROOM_LIST, roomList);
 
-  socket.on(CHANGE_ROOM_LIST, (newRoomList, callback) => {
-    roomList = [...roomList, newRoomList];
+  socket.on(CHANGE_ROOM_LIST, (newRoom, callback) => {
+    roomList = [...roomList, newRoom];
 
-    socket.join(newRoomList.id);
+    socket.join(newRoom.id);
 
-    socket.to(newRoomList.id).emit("message", initialState);
+    socket.to(newRoom.id).emit(CURRENT_STATE_GAME, initialState);
     io.emit(CURRENT_ROOM_LIST, roomList);
 
     callback();
   });
 
-  socket.on(CHANGE_START_GAMER, (room, index, callback) => {
+  socket.on(CHANGE_INIT_GAME, (newRoom, index, callback) => {
     let newArray = [...roomList];
 
-    newArray[index] = { ...room };
+    newArray[index] = { ...newRoom };
 
     roomList = newArray;
 
-    socket.join(room.id);
-    socket.to(room.id).emit("message", initialState);
+    socket.join(newRoom.id);
+
+    socket.to(newRoom.id).emit(CURRENT_STATE_GAME, initialState);
     io.emit(CURRENT_ROOM_LIST, roomList);
     callback();
   });
 
-  socket.on("message", (data) => {
-    socket.to(data.recipientSocketId).emit("message", initialState);
+  socket.on(CHANGE_STATE_GAME, (data) => {
+    io.to(data.id).emit(CURRENT_STATE_GAME, data.newState);
   });
 });
 

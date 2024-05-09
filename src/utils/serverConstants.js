@@ -7,9 +7,9 @@ const DISCONNECT = "disconnect";
 const CLIENT_DISCONNECTING = "clientDisconnecting";
 const CURRENT_ROOM_LIST = "currentRoomList";
 const CHANGE_ROOM_LIST = "changeRoomList";
-const CHANGE_START_GAMER = "changeStartGamer";
-const CURRENT_STATE_GAMER = "currentStateGamer";
-const CHANGE_STATE_GAMER = "changeStateGamer";
+const CHANGE_INIT_GAME = "changeStartGame";
+const CURRENT_STATE_GAME = "currentStateGame";
+const CHANGE_STATE_GAME = "changeStateGame";
 
 const PORT = process.env.PORT || 4000;
 
@@ -20,9 +20,9 @@ module.exports = {
   CHANGE_WINNER,
   CURRENT_ROOM_LIST,
   CHANGE_ROOM_LIST,
-  CHANGE_START_GAMER,
-  CURRENT_STATE_GAMER,
-  CHANGE_STATE_GAMER,
+  CHANGE_INIT_GAME,
+  CURRENT_STATE_GAME,
+  CHANGE_STATE_GAME,
   CONNECTION,
   DISCONNECT,
   CLIENT_DISCONNECTING,
