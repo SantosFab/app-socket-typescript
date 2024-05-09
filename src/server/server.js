@@ -10,6 +10,8 @@ const {
   PORT,
   CURRENT_STATE_GAME,
   CHANGE_STATE_GAME,
+  CHANGE_WHO_PLAYS,
+  CURRENT_WHO_PLAYS,
 } = require("../utils/serverConstants.js");
 
 const app = express();
@@ -22,7 +24,6 @@ const io = socketIo(server, {
 });
 
 let roomList = [];
-const initialState = { state: Array(9).fill(""), whoPlays: "X" };
 
 io.on(CONNECTION, (socket) => {
   console.log("conectado");
@@ -34,7 +35,6 @@ io.on(CONNECTION, (socket) => {
 
     socket.join(newRoom.id);
 
-    socket.to(newRoom.id).emit(CURRENT_STATE_GAME, initialState);
     io.emit(CURRENT_ROOM_LIST, roomList);
 
     callback();
@@ -49,13 +49,16 @@ io.on(CONNECTION, (socket) => {
 
     socket.join(newRoom.id);
 
-    socket.to(newRoom.id).emit(CURRENT_STATE_GAME, initialState);
     io.emit(CURRENT_ROOM_LIST, roomList);
     callback();
   });
 
   socket.on(CHANGE_STATE_GAME, (data) => {
-    io.to(data.id).emit(CURRENT_STATE_GAME, data.newState);
+    io.to(data.id).emit(CURRENT_STATE_GAME, data.newStateGame);
+  });
+
+  socket.on(CHANGE_WHO_PLAYS, (data) => {
+    io.to(data.id).emit(CURRENT_WHO_PLAYS, data.newWhoPlays);
   });
 });
 

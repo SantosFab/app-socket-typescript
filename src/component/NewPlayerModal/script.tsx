@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CHANGE_INIT_GAME } from "../../utils/serverConstants";
-import { RoomList } from "../../use/getRoomList/useSocketGetRoomList";
+import { RoomList } from "../../use/RoomList/useSocketRoomList";
 import { useNavigate } from "react-router-dom";
 
 const socket = getSocketInstance();

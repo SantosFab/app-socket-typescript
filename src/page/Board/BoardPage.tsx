@@ -2,31 +2,30 @@ import { FunctionComponent, useState } from "react";
 import "./BoardPage.css";
 import { useParams } from "react-router-dom";
 import Square from "../../component/Square/Square";
-import useSocketGetStateGame, {
-  StateGame,
-} from "../../use/getCurrentStateGame/useGetStateGame";
-import { playerMove } from "./script";
+import useSocketStateGame from "../../use/StateGame/useSocketStateGame";
+import { TypePiece, playerMove } from "./script";
 
 interface BoardPageProps {}
 
 const BoardPage: FunctionComponent<BoardPageProps> = () => {
-  const [StateGame, setStateGame] = useState<StateGame>({
-    state: Array(9).fill(""),
-    whoPlays: "X",
-  });
+  const [StateGame, setStateGame] = useState<string[]>(Array(9).fill(""));
+
+  const [WhoPlays, setWhoPlays] = useState<TypePiece>("X");
 
   const params = useParams();
 
   const id = params.id;
   const piece = params.piece;
 
-  useSocketGetStateGame({ setStateGame });
+  useSocketStateGame({ setStateGame });
 
   const renderSquare = (index: number) => {
     return (
       <Square
-        value={StateGame.state[index]}
-        onClick={() => playerMove({ index, piece, StateGame, id })}
+        value={StateGame[index]}
+        onClick={() => {
+          playerMove({ index, StateGame, WhoPlays, id, piece });
+        }}
       />
     );
   };
