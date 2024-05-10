@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CURRENT_STATE_GAME } from "../../utils/serverConstants";
 
-interface CurrentPlayer {
+interface InterfaceStateGame {
   setStateGame: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const socket = getSocketInstance();
 
-const useSocketStateGame = ({ setStateGame }: CurrentPlayer) => {
+const useSocketStateGame = ({ setStateGame }: InterfaceStateGame) => {
   useEffect(() => {
     // Configurar o ouvinte de eventos para CurrentStateGame
     socket.on(CURRENT_STATE_GAME, (arg) => {

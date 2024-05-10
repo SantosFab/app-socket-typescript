@@ -7,7 +7,7 @@ const AppRouter = () => {
     <Routes>
       <Route index element={<RoomPage />} />
       <Route
-        path="/GameRoom/:id/:piece"
+        path="/GameRoom/:id/:piece/:index"
         element={<BoardPage />}
       ></Route>
     </Routes>

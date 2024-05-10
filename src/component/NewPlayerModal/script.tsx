@@ -2,14 +2,14 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CHANGE_INIT_GAME } from "../../utils/serverConstants";
-import { RoomList } from "../../use/RoomList/useSocketRoomList";
+import { Room } from "../../use/RoomList/useSocketRoomList";
 import { useNavigate } from "react-router-dom";
 
 const socket = getSocketInstance();
 
 interface interfaceMyFormik {
   onClick: React.Dispatch<React.SetStateAction<boolean>>;
-  room: RoomList;
+  room: Room;
 }
 
 export const useMyFormik = ({ onClick, room }: interfaceMyFormik) => {
@@ -26,14 +26,16 @@ export const useMyFormik = ({ onClick, room }: interfaceMyFormik) => {
     },
     validationSchema: schema,
     onSubmit: (values, { resetForm }) => {
-      const newRoom: RoomList = { ...values, ...room, idPlayerTwo: socket.id };
+      const newRoom: Room = { ...values, ...room, idPlayerTwo: socket.id };
 
       console.log(newRoom);
 
       socket.emit(CHANGE_INIT_GAME, newRoom, newRoom.index, () => {
         onClick(false);
         resetForm();
-        navigate(`/GameRoom/${newRoom.id}/${newRoom.pieceTwo}`);
+        navigate(
+          `/GameRoom/${newRoom.id}/${newRoom.pieceTwo}/${newRoom.index}`
+        );
       });
     },
   });

@@ -1,0 +1,1 @@
+export type TypePiece = "X" | "0";

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CURRENT_ROOM_LIST } from "../../utils/serverConstants";
 
-export interface RoomList {
+export interface Room {
   id: string;
   index: number;
   roomName: string;
@@ -15,7 +15,7 @@ export interface RoomList {
 }
 
 interface interfaceRoomList {
-  setRoomList: React.Dispatch<React.SetStateAction<RoomList[] | []>>;
+  setRoomList: React.Dispatch<React.SetStateAction<Room[] | []>>;
 }
 
 const socket = getSocketInstance();

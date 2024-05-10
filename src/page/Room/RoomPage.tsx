@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import useSocketRoomList, {
-  RoomList,
+  Room,
 } from "../../use/RoomList/useSocketRoomList";
 import RoomCard from "../../component/RoomCard/RoomCard";
 import NewRoomModal from "../../component/NewRoomModal/NewRoomModal";
@@ -10,7 +10,7 @@ import "./RoomPage.css";
 interface RoomPageProps {}
 
 const RoomPage: FunctionComponent<RoomPageProps> = () => {
-  const [RoomList, setRoomList] = useState<RoomList[]>([]);
+  const [RoomList, setRoomList] = useState<Room[]>([]);
   const [ShowNewRoomModal, setShowNewRoomModal] = useState<boolean>(false);
 
   useSocketRoomList({ setRoomList });

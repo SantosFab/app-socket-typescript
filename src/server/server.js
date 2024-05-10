@@ -12,6 +12,12 @@ const {
   CHANGE_STATE_GAME,
   CHANGE_WHO_PLAYS,
   CURRENT_WHO_PLAYS,
+  CHANGE_WINNER,
+  CURRENT_WINNER,
+  CHANGE_CHAMPION,
+  CURRENT_CHAMPION,
+  CHANGE_DRAW,
+  CURRENT_DRAW,
 } = require("../utils/serverConstants.js");
 
 const app = express();
@@ -24,6 +30,25 @@ const io = socketIo(server, {
 });
 
 let roomList = [];
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  next();
+});
+
+app.get("/api/roomList/:index", (req, res) => {
+  const index = req.params.index;
+  const roomData = roomList[index];
+  if (roomData) {
+    res.json({...roomData});
+  } else {
+    res.status(404).json({ error: "Room not found" });
+  }
+});
 
 io.on(CONNECTION, (socket) => {
   console.log("conectado");
@@ -42,7 +67,6 @@ io.on(CONNECTION, (socket) => {
 
   socket.on(CHANGE_INIT_GAME, (newRoom, index, callback) => {
     let newArray = [...roomList];
-
     newArray[index] = { ...newRoom };
 
     roomList = newArray;
@@ -59,6 +83,18 @@ io.on(CONNECTION, (socket) => {
 
   socket.on(CHANGE_WHO_PLAYS, (data) => {
     io.to(data.id).emit(CURRENT_WHO_PLAYS, data.newWhoPlays);
+  });
+
+  socket.on(CHANGE_WINNER, (data) => {
+    io.to(data.id).emit(CURRENT_WINNER, data.newWinner);
+  });
+
+  socket.on(CHANGE_CHAMPION, (data) => {
+    io.to(data.id).emit(CURRENT_CHAMPION, data.newChampion);
+  });
+
+  socket.on(CHANGE_DRAW, (data) => {
+    io.to(data.id).emit(CURRENT_DRAW, data.newDraw);
   });
 });
 

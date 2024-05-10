@@ -1,47 +1,46 @@
 import { getSocketInstance } from "../../server/instance/socket";
-import { TypePiece } from "../../use/WhoPlays/useSocketWhoPlays";
+import { TypePiece } from "../../use/type/typePiece";
 import {
+  CHANGE_CHAMPION,
+  CHANGE_DRAW,
   CHANGE_STATE_GAME,
   CHANGE_WHO_PLAYS,
+  CHANGE_WINNER,
 } from "../../utils/serverConstants";
 
 const socket = getSocketInstance();
 
 interface interfaceChangePlayer {
-  id?: string;
-  index: number;
-  piece?: string;
-  StateGame: string[];
+  id: string;
+  piece: string;
+  newStateGame: string[];
   WhoPlays: TypePiece;
 }
 
 export function playerMove({
   id,
-  index,
   piece,
-  StateGame,
+  newStateGame,
   WhoPlays,
 }: interfaceChangePlayer) {
-  if (piece !== WhoPlays || piece === undefined || id === undefined) {
+  if (piece !== WhoPlays) {
     return;
   }
 
   if (piece === "X" || piece === "0") {
-    let newStateGame = [...StateGame];
-    let newWhoPlays = WhoPlays;
-
-    newStateGame[index] = piece;
-
-    newWhoPlays = piece === "X" ? "0" : "X";
-    console.log(newWhoPlays);
+    const newWhoPlays = piece === "X" ? "0" : "X";
 
     socket.emit(CHANGE_STATE_GAME, { id, newStateGame });
     socket.emit(CHANGE_WHO_PLAYS, { id, newWhoPlays });
   }
 }
 
-/* function checkWinner(board: StateGame): StateGame {
-  let newState = { ...board };
+interface CheckWinner {
+  newStateGame: string[];
+  id?: string;
+}
+
+export function checkWinner({ newStateGame, id }: CheckWinner) {
   const winningConditions = [
     // Linhas
     [0, 1, 2],
@@ -59,26 +58,28 @@ export function playerMove({
   for (let condition of winningConditions) {
     const [a, b, c] = condition;
     if (
-      newState.state[a] &&
-      newState.state[a] === newState.state[b] &&
-      newState.state[a] === newState.state[c]
+      newStateGame[a] &&
+      newStateGame[a] === newStateGame[b] &&
+      newStateGame[a] === newStateGame[c]
     ) {
-      newState.winner = true;
-      newState.champion = newState.state[a];
-      console.log("vencendor", newState);
+      const newWinner = true;
+      const newChampion = newStateGame[a];
 
-      return newState;
+      socket.emit(CHANGE_WINNER, { id, newWinner });
+      socket.emit(CHANGE_CHAMPION, { id, newChampion });
+
+      return;
     }
   }
 
   // Se não houver vencedor
-  if (newState.state.every((cell) => cell !== "")) {
-    newState.draw = true;
-    console.log("empate", newState);
+  if (newStateGame.every((cell) => cell !== "")) {
+    const newDraw = true;
+    console.log("chamei o draw", newDraw);
 
-    return newState;
+    socket.emit(CHANGE_DRAW, { id, newDraw });
+    return;
   }
 
-  return newState;
+  return;
 }
- */
