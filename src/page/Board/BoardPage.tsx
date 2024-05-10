@@ -6,7 +6,7 @@ import useSocketStateGame from "../../use/StateGame/useSocketStateGame";
 import { checkWinner, playerMove } from "./script";
 import useSocketWhoPlays from "../../use/WhoPlays/useSocketWhoPlays";
 import useSocketChampion from "../../use/Champion/useSocketChampion";
-import { TypePiece } from "../../use/type/typePiece";
+import { TypePiece } from "../../interface/Type/typePiece";
 import useSocketDraw from "../../use/Draw/useSocketDraw";
 import useSocketWinner from "../../use/Winner/useSocketWinner";
 import useAxiosVerification from "../../use/Verification/useAxiosVerification";

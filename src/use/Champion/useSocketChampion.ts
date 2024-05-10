@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CURRENT_CHAMPION } from "../../utils/serverConstants";
-import { TypePiece } from "../type/typePiece";
+import { TypePiece } from "../../interface/Type/typePiece";
 
 interface InterfaceChampion {
   setChampion: React.Dispatch<React.SetStateAction<TypePiece | undefined>>;

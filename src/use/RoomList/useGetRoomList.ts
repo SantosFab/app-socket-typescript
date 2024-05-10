@@ -3,18 +3,7 @@ import { getSocketInstance } from "../../server/instance/socket";
 import { CURRENT_ROOM_LIST } from "../../utils/serverConstants";
 import axios from "../../api/getRoom";
 import { AxiosResponse } from "axios";
-
-export interface Room {
-  id: string;
-  index: number;
-  roomName: string;
-  idPlayerOne?: string;
-  pieceOne: string;
-  nickNameOne: string;
-  pieceTwo?: string;
-  nickNameTwo?: string;
-  idPlayerTwo?: string;
-}
+import { Room } from "../../interface/Room/Room";
 
 interface interfaceRoomList {
   setRoomList: React.Dispatch<React.SetStateAction<Room[] | []>>;
@@ -27,8 +16,7 @@ const useGetRoomList = ({ setRoomList }: interfaceRoomList): void => {
     const fetchRoomList = async () => {
       try {
         const response: AxiosResponse<Room[]> = await axios.get("/roomList");
-        console.log('fetch', response.data);
-        
+
         setRoomList(response.data);
       } catch (error) {
         console.error("Error fetching room list:", error);
@@ -36,8 +24,6 @@ const useGetRoomList = ({ setRoomList }: interfaceRoomList): void => {
     };
 
     socket.on(CURRENT_ROOM_LIST, (data) => {
-      console.log('socket', data);
-      
       setRoomList(data);
     });
 

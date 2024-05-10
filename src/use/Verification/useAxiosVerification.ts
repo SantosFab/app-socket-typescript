@@ -1,9 +1,9 @@
 import axios from "../../api/getRoom";
 import { useEffect } from "react";
-import { Room } from "../RoomList/useGetRoomList";
 import { getSocketInstance } from "../../server/instance/socket";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
+import { Room } from "../../interface/Room/Room";
 
 interface InterfaceAxiosRoom {
   index?: string;

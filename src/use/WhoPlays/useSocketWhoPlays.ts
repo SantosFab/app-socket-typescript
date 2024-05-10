@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CURRENT_WHO_PLAYS } from "../../utils/serverConstants";
-import { TypePiece } from "../type/typePiece";
+import { TypePiece } from "../../interface/Type/typePiece";
 
 interface InterfaceWhoPlays {
   setWhoPlays: React.Dispatch<React.SetStateAction<TypePiece>>;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Row, Button, Modal, Form } from "react-bootstrap";
 import { useMyFormik, whatIsThePiece } from "./script";
-import { Room } from "../../use/RoomList/useGetRoomList";
+import { Room } from "../../interface/Room/Room";
 
 interface NewPlayerModalProps {
   setShowNewPlayerModal: React.Dispatch<React.SetStateAction<boolean>>;

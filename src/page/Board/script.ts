@@ -1,5 +1,5 @@
 import { getSocketInstance } from "../../server/instance/socket";
-import { TypePiece } from "../../use/type/typePiece";
+import { TypePiece } from "../../interface/Type/typePiece";
 import {
   CHANGE_CHAMPION,
   CHANGE_DRAW,
