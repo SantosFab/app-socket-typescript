@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { getSocketInstance } from "../../server/instance/socket";
 import { CURRENT_ROOM_LIST } from "../../utils/serverConstants";
+import axios from "../../api/getRoom";
+import { AxiosResponse } from "axios";
 
 export interface Room {
   id: string;
@@ -20,15 +22,30 @@ interface interfaceRoomList {
 
 const socket = getSocketInstance();
 
-const useSocketRoomList = ({ setRoomList }: interfaceRoomList): void => {
+const useGetRoomList = ({ setRoomList }: interfaceRoomList): void => {
   useEffect(() => {
-    socket.on(CURRENT_ROOM_LIST, (currentRoomList) => {
-      setRoomList(currentRoomList);
+    const fetchRoomList = async () => {
+      try {
+        const response: AxiosResponse<Room[]> = await axios.get("/roomList");
+        console.log('fetch', response.data);
+        
+        setRoomList(response.data);
+      } catch (error) {
+        console.error("Error fetching room list:", error);
+      }
+    };
+
+    socket.on(CURRENT_ROOM_LIST, (data) => {
+      console.log('socket', data);
+      
+      setRoomList(data);
     });
+
+    fetchRoomList();
 
     return () => {
       socket.off(CURRENT_ROOM_LIST);
     };
   }, [setRoomList]);
 };
-export default useSocketRoomList;
+export default useGetRoomList;

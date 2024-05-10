@@ -10,7 +10,6 @@ import { TypePiece } from "../../use/type/typePiece";
 import useSocketDraw from "../../use/Draw/useSocketDraw";
 import useSocketWinner from "../../use/Winner/useSocketWinner";
 import useAxiosVerification from "../../use/Verification/useAxiosVerification";
-import { Room } from "../../use/RoomList/useSocketRoomList";
 
 interface BoardPageProps {}
 
@@ -21,16 +20,14 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
   const [Draw, setDraw] = useState<boolean>(false);
   const [Winner, setWinner] = useState<boolean>(false);
 
-  const [Room, setRoom] = useState<Room>();
-
   const { id, piece, index } = useParams();
 
+  useAxiosVerification({ index });
   useSocketStateGame({ setStateGame });
   useSocketWhoPlays({ setWhoPlays });
   useSocketChampion({ setChampion });
   useSocketDraw({ setDraw });
   useSocketWinner({ setWinner });
-  useAxiosVerification({ setRoom, index });
 
   const renderSquare = (index: number) => {
     return (
@@ -72,8 +69,7 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
         <button
           onClick={() =>
             console.log(
-              //`draw:${Draw} - champion:${Champion} - winner:${Winner} whoPlays${WhoPlays}`
-              console.log(Room)
+              `draw:${Draw} - champion:${Champion} - winner:${Winner} whoPlays${WhoPlays}`
             )
           }
         >

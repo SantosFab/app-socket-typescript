@@ -41,19 +41,25 @@ app.use((req, res, next) => {
 });
 
 app.get("/api/roomList/:index", (req, res) => {
-  const index = req.params.index;
-  const roomData = roomList[index];
-  if (roomData) {
-    res.json({...roomData});
-  } else {
+  try {
+    const index = req.params.index;
+    const roomData = roomList[index];
+    res.json({ ...roomData });
+  } catch (error) {
+    res.status(404).json({ error: "Room not found" });
+  }
+});
+
+app.get("/api/roomList", (req, res) => {
+  try {
+    res.json([...roomList]);
+  } catch (error) {
     res.status(404).json({ error: "Room not found" });
   }
 });
 
 io.on(CONNECTION, (socket) => {
   console.log("conectado");
-
-  io.emit(CURRENT_ROOM_LIST, roomList);
 
   socket.on(CHANGE_ROOM_LIST, (newRoom, callback) => {
     roomList = [...roomList, newRoom];

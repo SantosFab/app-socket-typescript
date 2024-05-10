@@ -1,8 +1,8 @@
 import { FunctionComponent, useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
-import useSocketRoomList, {
+import useGetRoomList, {
   Room,
-} from "../../use/RoomList/useSocketRoomList";
+} from "../../use/RoomList/useGetRoomList";
 import RoomCard from "../../component/RoomCard/RoomCard";
 import NewRoomModal from "../../component/NewRoomModal/NewRoomModal";
 import "./RoomPage.css";
@@ -13,7 +13,7 @@ const RoomPage: FunctionComponent<RoomPageProps> = () => {
   const [RoomList, setRoomList] = useState<Room[]>([]);
   const [ShowNewRoomModal, setShowNewRoomModal] = useState<boolean>(false);
 
-  useSocketRoomList({ setRoomList });
+  useGetRoomList({ setRoomList });
 
   return (
     <Container className="RoomPage">
