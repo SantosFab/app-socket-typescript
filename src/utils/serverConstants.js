@@ -14,7 +14,8 @@ const CURRENT_DRAW = "currentDraw";
 const CHANGE_DRAW = "changeDraw";
 const CONNECTION = "connection";
 const DISCONNECT = "disconnect";
-const CLIENT_DISCONNECTING = "clientDisconnecting";
+const CLOSE_ROOM = "closeRoom";
+const USER_LOG_OUT = "userLogOut";
 
 const PORT = process.env.PORT || 4000;
 
@@ -35,6 +36,7 @@ module.exports = {
   CHANGE_DRAW,
   CONNECTION,
   DISCONNECT,
-  CLIENT_DISCONNECTING,
+  CLOSE_ROOM,
+  USER_LOG_OUT,
   PORT,
 };

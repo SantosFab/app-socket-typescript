@@ -27,6 +27,7 @@ const RoomPage: FunctionComponent<RoomPageProps> = () => {
         index={RoomList.length}
       />
       <Button onClick={() => setShowNewRoomModal(true)}>Criar nova sala</Button>
+      <button onClick={() => console.log(...RoomList)}>button</button>
     </Container>
   );
 };

@@ -19,6 +19,8 @@ const {
   CHANGE_DRAW,
   CURRENT_DRAW,
   CURRENT_INIT_GAME,
+  USER_LOG_OUT,
+  CLOSE_ROOM,
 } = require("../utils/serverConstants.js");
 
 const app = express();
@@ -63,48 +65,100 @@ io.on(CONNECTION, (socket) => {
   console.log("conectado");
 
   socket.on(CHANGE_ROOM_LIST, (newRoom, callback) => {
-    roomList = [...roomList, newRoom];
+    try {
+      roomList = [...roomList, newRoom];
 
-    socket.join(newRoom.id);
+      socket.join(newRoom.id);
 
-    io.emit(CURRENT_ROOM_LIST, roomList);
+      io.emit(CURRENT_ROOM_LIST, roomList);
 
-    callback();
+      callback();
+    } catch (error) {
+      console.error("Ocorreu um error no RoomList");
+    }
   });
 
   socket.on(CHANGE_INIT_GAME, (newRoom, index, callback) => {
-    let newArray = [...roomList];
-    newArray[index] = { ...newRoom };
+    try {
+      let newArray = [...roomList];
+      newArray[index] = { ...newRoom };
 
-    roomList = newArray;
-    
-    console.log(newRoom.id);
-    
-    socket.join(newRoom.id);
+      roomList = newArray;
 
-    io.to(newRoom.id).emit(CURRENT_INIT_GAME, newRoom);
-    io.emit(CURRENT_ROOM_LIST, roomList);
-    callback();
+      socket.join(newRoom.id);
+
+      io.to(newRoom.id).emit(CURRENT_INIT_GAME, newRoom);
+      io.emit(CURRENT_ROOM_LIST, roomList);
+      callback();
+    } catch (error) {
+      console.error("Ocorreu um error no InitGame", error);
+    }
   });
 
   socket.on(CHANGE_STATE_GAME, (data) => {
-    io.to(data.id).emit(CURRENT_STATE_GAME, data.newStateGame);
+    try {
+      io.to(data.id).emit(CURRENT_STATE_GAME, data.newStateGame);
+    } catch (error) {
+      console.error("Ocorreu um error no StateGame", error);
+    }
   });
 
   socket.on(CHANGE_WHO_PLAYS, (data) => {
-    io.to(data.id).emit(CURRENT_WHO_PLAYS, data.newWhoPlays);
+    try {
+      io.to(data.id).emit(CURRENT_WHO_PLAYS, data.newWhoPlays);
+    } catch (error) {
+      console.error("Ocorreu um error no WhoPlays", error);
+    }
   });
 
   socket.on(CHANGE_WINNER, (data) => {
-    io.to(data.id).emit(CURRENT_WINNER, data.newWinner);
+    try {
+      io.to(data.id).emit(CURRENT_WINNER, data.newWinner);
+    } catch (error) {
+      console.error("Ocorreu um error no Winner", error);
+    }
   });
 
   socket.on(CHANGE_CHAMPION, (data) => {
-    io.to(data.id).emit(CURRENT_CHAMPION, data.newChampion);
+    try {
+      io.to(data.id).emit(CURRENT_CHAMPION, data.newChampion);
+    } catch (error) {
+      console.error("Ocorreu um error no Champion", error);
+    }
   });
 
   socket.on(CHANGE_DRAW, (data) => {
-    io.to(data.id).emit(CURRENT_DRAW, data.newDraw);
+    try {
+      io.to(data.id).emit(CURRENT_DRAW, data.newDraw);
+    } catch (error) {
+      console.error("Ocorreu um error no Draw", error);
+    }
+  });
+
+  socket.on(USER_LOG_OUT, (newRoom, index) => {
+    try {
+      let newArray = [...roomList];
+      newArray[index] = { ...newRoom };
+
+      roomList = newArray;
+
+      io.to(newRoom.id).emit(CURRENT_INIT_GAME, newRoom);
+      io.emit(CURRENT_ROOM_LIST, roomList);
+
+      socket.leave(newRoom.id);
+    } catch (error) {
+      console.error("Ocorreu um error na desconexão do cliente", error);
+    }
+  });
+
+  socket.on(CLOSE_ROOM, (id, index) => {
+    try {
+      roomList = roomList.filter((_, i) => i !== index);
+      io.emit(CURRENT_ROOM_LIST, roomList);
+      socket.leave(id);
+    } catch (error) {
+      console.error("Ocorreu um erro ao fechar a sala:", error);
+    }
   });
 });
 

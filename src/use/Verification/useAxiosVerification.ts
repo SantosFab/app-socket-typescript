@@ -28,11 +28,11 @@ const useAxiosVerification = ({ index, setRoom }: InterfaceAxiosRoom) => {
 
         if (socketID === Room.idPlayerOne || socketID === Room.idPlayerTwo) {
           setRoom(Room);
-          socket.on(CURRENT_INIT_GAME, (newRoom) => {
-            console.log("init_game, ", newRoom);
 
+          socket.on(CURRENT_INIT_GAME, (newRoom) => {
             setRoom(newRoom);
           });
+
           return;
         } else {
           navigate("/");

@@ -11,7 +11,7 @@ import useSocketDraw from "../../use/Draw/useSocketDraw";
 import useSocketWinner from "../../use/Winner/useSocketWinner";
 import useAxiosVerification from "../../use/Verification/useAxiosVerification";
 import { Room } from "../../interface/Room/Room";
-import useSocketBeforeUnloand from "../../use/BeforeUnload/useSocketBeforeUnload";
+import useSocketBeforeUnloand from "../../use/DisconnectRoom/useSocketDisconnectRoom";
 
 interface BoardPageProps {}
 
