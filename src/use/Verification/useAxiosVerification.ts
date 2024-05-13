@@ -1,17 +1,19 @@
 import axios from "../../api/getRoom";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { getSocketInstance } from "../../server/instance/socket";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import { Room } from "../../interface/Room/Room";
+import { CURRENT_INIT_GAME } from "../../utils/serverConstants";
 
 interface InterfaceAxiosRoom {
   index?: string;
+  setRoom: React.Dispatch<React.SetStateAction<Room | undefined>>;
 }
 
 const socket = getSocketInstance();
 
-const useAxiosVerification = ({ index }: InterfaceAxiosRoom) => {
+const useAxiosVerification = ({ index, setRoom }: InterfaceAxiosRoom) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,20 +23,27 @@ const useAxiosVerification = ({ index }: InterfaceAxiosRoom) => {
           `/roomList/${index}`
         );
 
-        const data = response.data;
+        const Room = response.data;
         const socketID = socket.id;
 
-        if (socketID === data.idPlayerOne || socketID === data.idPlayerTwo) {
+        if (socketID === Room.idPlayerOne || socketID === Room.idPlayerTwo) {
+          setRoom(Room);
+          socket.on(CURRENT_INIT_GAME, (newRoom) => {
+            console.log("init_game, ", newRoom);
+
+            setRoom(newRoom);
+          });
           return;
         } else {
           navigate("/");
+          return;
         }
       } catch (error) {
         console.error("Error fetching room list:", error);
       }
     };
     fetchRoom();
-  }, [index, navigate]);
+  }, [index, navigate, setRoom]);
 };
 
 export default useAxiosVerification;

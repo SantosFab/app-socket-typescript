@@ -43,6 +43,19 @@ export const useMyFormik = ({ onClick, room }: interfaceMyFormik) => {
   return formik;
 };
 
-export function whatIsThePiece(params: string): string {
-  return params === "X" ? "0" : "X";
+interface InterfaceWhatIsThePiece {
+  pieceOne: string | undefined;
+  pieceTwo: string | undefined;
+}
+
+export function whatIsThePiece({
+  pieceOne,
+  pieceTwo,
+}: InterfaceWhatIsThePiece): string {
+  if (pieceOne !== undefined && (pieceOne === "X" || pieceOne === "0")) {
+    return pieceOne === "X" ? "0" : "X";
+  } else if (pieceTwo !== undefined && (pieceTwo === "X" || pieceTwo === "0")) {
+    return pieceTwo === "X" ? "0" : "X";
+  }
+  return "Ocorreu um erro!";
 }

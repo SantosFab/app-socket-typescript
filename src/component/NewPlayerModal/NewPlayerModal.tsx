@@ -16,7 +16,10 @@ const NewPlayerModal: React.FunctionComponent<NewPlayerModalProps> = ({
 }) => {
   const formik = useMyFormik({ onClick: setShowNewPlayerModal, room });
 
-  const piece = whatIsThePiece(room.pieceOne);
+  const piece = whatIsThePiece({
+    pieceOne: room.pieceOne,
+    pieceTwo: room.pieceTwo,
+  });
 
   return (
     <Modal
@@ -68,7 +71,16 @@ const NewPlayerModal: React.FunctionComponent<NewPlayerModalProps> = ({
                 <option disabled value="">
                   ---SELECIONAR PEÇA---
                 </option>
-                <option value={piece}>{piece}</option>
+                <option
+                  disabled={
+                    piece === "Ocorreu um erro!"
+                      ? true
+                      : false
+                  }
+                  value={piece}
+                >
+                  {piece}
+                </option>
               </Form.Control>
               {formik.touched.pieceTwo && formik.errors.pieceTwo ? (
                 <Form.Text className="text-danger">

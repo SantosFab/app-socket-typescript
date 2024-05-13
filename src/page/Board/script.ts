@@ -75,7 +75,6 @@ export function checkWinner({ newStateGame, id }: CheckWinner) {
   // Se não houver vencedor
   if (newStateGame.every((cell) => cell !== "")) {
     const newDraw = true;
-    console.log("chamei o draw", newDraw);
 
     socket.emit(CHANGE_DRAW, { id, newDraw });
     return;

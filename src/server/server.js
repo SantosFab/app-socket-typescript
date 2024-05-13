@@ -18,6 +18,7 @@ const {
   CURRENT_CHAMPION,
   CHANGE_DRAW,
   CURRENT_DRAW,
+  CURRENT_INIT_GAME,
 } = require("../utils/serverConstants.js");
 
 const app = express();
@@ -76,9 +77,12 @@ io.on(CONNECTION, (socket) => {
     newArray[index] = { ...newRoom };
 
     roomList = newArray;
-
+    
+    console.log(newRoom.id);
+    
     socket.join(newRoom.id);
 
+    io.to(newRoom.id).emit(CURRENT_INIT_GAME, newRoom);
     io.emit(CURRENT_ROOM_LIST, roomList);
     callback();
   });

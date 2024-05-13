@@ -10,7 +10,7 @@ interface RoomCardProps {
 
 const RoomCard: FunctionComponent<RoomCardProps> = ({ room }) => {
   const [ShowNewPlayerModal, setShowNewPlayerModal] = useState<boolean>(false);
-
+  
   return (
     <Col xs="auto">
       <Card className="RoomCard">
