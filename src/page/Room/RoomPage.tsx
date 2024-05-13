@@ -5,14 +5,12 @@ import RoomCard from "../../component/RoomCard/RoomCard";
 import NewRoomModal from "../../component/NewRoomModal/NewRoomModal";
 import "./RoomPage.css";
 import { Room } from "../../interface/Room/Room";
-import { useNavigate } from "react-router-dom";
 
 interface RoomPageProps {}
 
 const RoomPage: FunctionComponent<RoomPageProps> = () => {
   const [RoomList, setRoomList] = useState<Room[]>([]);
   const [ShowNewRoomModal, setShowNewRoomModal] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   useGetRoomList({ setRoomList });
 
@@ -29,7 +27,6 @@ const RoomPage: FunctionComponent<RoomPageProps> = () => {
         index={RoomList.length}
       />
       <Button onClick={() => setShowNewRoomModal(true)}>Criar nova sala</Button>
-      <button onClick={() => navigate("/test")}> test</button>
     </Container>
   );
 };

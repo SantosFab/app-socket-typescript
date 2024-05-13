@@ -1,14 +1,22 @@
-import { Routes, Route } from "react-router-dom";
-import RoomPage from "../page/Room/RoomPage";
+import { createBrowserRouter } from "react-router-dom";
 import BoardPage from "../page/Board/BoardPage";
+import App from "../app/App";
+import RoomPage from "../page/Room/RoomPage";
 
-const AppRouter = () => {
-  return (
-    <Routes>
-      <Route index element={<RoomPage />} />
-      <Route path="/GameRoom/:id/:piece/:index" element={<BoardPage />}></Route>
-    </Routes>
-  );
-};
+const router = createBrowserRouter([
+  {
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <RoomPage />,
+      },
+      {
+        path: "GameRoom/:id/:piece/:index",
+        element: <BoardPage />,
+      },
+    ],
+  },
+]);
 
-export default AppRouter;
+export default router;
