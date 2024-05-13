@@ -1,13 +1,12 @@
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
-}
-
-.column { 
+.BoardPage {
   height: 100vh;
-  display: flex;
+  width: 100vw;
+  display: grid;
   justify-content: center;
+  justify-items: center;
+  align-content: center;
   align-items: center;
-  flex-direction: column;
+  grid-template-columns: repeat(3, auto);
+  grid-auto-flow: row; /* Organiza os elementos em linhas */
+  background-color: aquamarine;
 }

@@ -57,7 +57,7 @@ app.get("/api/roomList", (req, res) => {
   try {
     res.json([...roomList]);
   } catch (error) {
-    res.status(404).json({ error: "Room not found" });
+    res.status(404).json({ error: "RoomList not found" });
   }
 });
 

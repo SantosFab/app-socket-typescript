@@ -1,14 +1,36 @@
-.square {
-  background: #fff;
-  border: 1px solid #999;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 34px;
+.Square {
+  width: 100px;
+  height: 100px;
+  background-color: aquamarine;
+  border: 2px solid white;
+  font-size: 30px;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Square-0,
+.Square-1,
+.Square-2 {
+  border-top: none;
+}
+
+.Square-0,
+.Square-3,
+.Square-6 {
+  border-left: none;
+}
+
+.Square-2,
+.Square-5,
+.Square-8 {
+  border-right: none;
+}
+
+.Square-6,
+.Square-7,
+.Square-8 {
+  border-bottom: none;
 }
