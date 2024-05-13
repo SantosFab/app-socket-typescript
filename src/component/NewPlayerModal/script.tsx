@@ -52,10 +52,10 @@ export function whatIsThePiece({
   pieceOne,
   pieceTwo,
 }: InterfaceWhatIsThePiece): string {
-  if (pieceOne !== undefined && (pieceOne === "X" || pieceOne === "0")) {
-    return pieceOne === "X" ? "0" : "X";
-  } else if (pieceTwo !== undefined && (pieceTwo === "X" || pieceTwo === "0")) {
-    return pieceTwo === "X" ? "0" : "X";
+  if (pieceOne !== undefined && (pieceOne === "X" || pieceOne === "O")) {
+    return pieceOne === "X" ? "O" : "X";
+  } else if (pieceTwo !== undefined && (pieceTwo === "X" || pieceTwo === "O")) {
+    return pieceTwo === "X" ? "O" : "X";
   }
   return "Ocorreu um erro!";
 }

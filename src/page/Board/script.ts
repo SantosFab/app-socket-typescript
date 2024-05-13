@@ -27,8 +27,8 @@ export function playerMove({
     return;
   }
 
-  if (piece === "X" || piece === "0") {
-    const newWhoPlays = piece === "X" ? "0" : "X";
+  if (piece === "X" || piece === "O") {
+    const newWhoPlays = piece === "X" ? "O" : "X";
 
     socket.emit(CHANGE_STATE_GAME, { id, newStateGame });
     socket.emit(CHANGE_WHO_PLAYS, { id, newWhoPlays });

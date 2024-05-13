@@ -1,1 +1,1 @@
-export type TypePiece = "X" | "0";
+export type TypePiece = "X" | "O";
