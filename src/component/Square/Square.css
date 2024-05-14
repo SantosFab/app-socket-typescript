@@ -9,6 +9,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.Square.X,
+.Square.O {
+  cursor: not-allowed;
 }
 
 .Square-0,
@@ -33,4 +39,43 @@
 .Square-7,
 .Square-8 {
   border-bottom: none;
+}
+
+.Square.X::before,
+.Square.X::after,
+.whoPlays-X:not(.Square.x):not(.Square.O):hover::before,
+.whoPlays-X:not(.Square.x):not(.Square.O):hover::after {
+  content: "";
+  height: 15px;
+  width: 90px;
+  background-color: white;
+  position: absolute;
+}
+
+.Square.X::before,
+.whoPlays-X:hover::before {
+  transform: rotate(45deg);
+}
+.Square.X::after,
+.whoPlays-X:hover::after {
+  transform: rotate(-45deg);
+}
+
+.Square.O::before,
+.Square.O::after,
+.whoPlays-O:not(.Square.X):not(.Square.O):hover::before,
+.whoPlays-O:not(.Square.X):not(.Square.O):hover::after {
+  content: "";
+  height: 90px;
+  width: 90px;
+  background-color: white;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.whoPlays-X:not(.Square.x):not(.Square.O):hover::before,
+.whoPlays-X:not(.Square.x):not(.Square.O):hover::after,
+.whoPlays-O:not(.Square.X):not(.Square.O):hover::before,
+.whoPlays-O:not(.Square.X):not(.Square.O):hover::after {
+  background: rgba(255, 255, 255, 0.4);
 }

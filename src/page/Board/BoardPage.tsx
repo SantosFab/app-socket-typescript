@@ -38,6 +38,7 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
       <Square
         index={index}
         value={StateGame[index]}
+        WhoPlays={WhoPlays}
         onClick={() => {
           let newStateGame = [...StateGame];
 
@@ -54,23 +55,16 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
 
   return (
     <>
-      <div className="BoardPage">
-        <div className="board-row">
-          {renderSquare(0)}
-          {renderSquare(3)}
-          {renderSquare(6)}
-        </div>
-        <div className="board-row">
-          {renderSquare(1)}
-          {renderSquare(4)}
-          {renderSquare(7)}
-        </div>
-        <div className="board-row">
-          {renderSquare(2)}
-          {renderSquare(5)}
-          {renderSquare(8)}
-        </div>
-
+      <div className={`BoardPage ${WhoPlays}`}>
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
         <button
           onClick={() => {
             console.log(
