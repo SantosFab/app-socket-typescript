@@ -7,13 +7,18 @@ import { Room } from "../../interface/Room/Room";
 import { CURRENT_INIT_GAME } from "../../utils/serverConstants";
 
 interface InterfaceAxiosRoom {
+  piece?: string;
   index?: string;
   setRoom: React.Dispatch<React.SetStateAction<Room | undefined>>;
 }
 
 const socket = getSocketInstance();
 
-const useAxiosVerification = ({ index, setRoom }: InterfaceAxiosRoom) => {
+const useAxiosVerification = ({
+  index,
+  piece,
+  setRoom,
+}: InterfaceAxiosRoom) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +31,15 @@ const useAxiosVerification = ({ index, setRoom }: InterfaceAxiosRoom) => {
         const Room = response.data;
         const socketID = socket.id;
 
-        if (socketID === Room.idPlayerOne || socketID === Room.idPlayerTwo) {
+        if (
+          (socketID === Room.idPlayerOne && piece !== Room.pieceOne) ||
+          (socketID === Room.idPlayerTwo && piece !== Room.pieceTwo)
+        ) {
+          return;
+        } else if (
+          socketID === Room.idPlayerOne ||
+          socketID === Room.idPlayerTwo
+        ) {
           setRoom(Room);
 
           socket.on(CURRENT_INIT_GAME, (newRoom) => {
@@ -43,7 +56,7 @@ const useAxiosVerification = ({ index, setRoom }: InterfaceAxiosRoom) => {
       }
     };
     fetchRoom();
-  }, [index, navigate, setRoom]);
+  }, [index, piece, navigate, setRoom]);
 };
 
 export default useAxiosVerification;

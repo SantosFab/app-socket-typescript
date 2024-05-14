@@ -11,7 +11,8 @@ import useSocketDraw from "../../use/Draw/useSocketDraw";
 import useSocketWinner from "../../use/Winner/useSocketWinner";
 import useAxiosVerification from "../../use/Verification/useAxiosVerification";
 import { Room } from "../../interface/Room/Room";
-import useSocketBeforeUnloand from "../../use/DisconnectRoom/useSocketDisconnectRoom";
+import InputButton from "../../component/InputButton/InputButton";
+import useSocketDisconnectRoom from "../../use/DisconnectRoom/useSocketDisconnectRoom";
 
 interface BoardPageProps {}
 
@@ -25,13 +26,13 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
 
   const { id, piece, index } = useParams();
 
-  useAxiosVerification({ index, setRoom });
+  useAxiosVerification({ index, piece,setRoom });
   useSocketStateGame({ setStateGame });
   useSocketWhoPlays({ setWhoPlays });
   useSocketChampion({ setChampion });
   useSocketDraw({ setDraw });
   useSocketWinner({ setWinner });
-  useSocketBeforeUnloand({ Room, id });
+  useSocketDisconnectRoom({ id, Room });
 
   const renderSquare = (index: number) => {
     return (
@@ -65,6 +66,16 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
         {renderSquare(6)}
         {renderSquare(7)}
         {renderSquare(8)}
+        <div className={`winner-${Winner}`}>
+          {piece === Champion ? (
+            <>
+              <p>{Champion} venceu!</p>
+              <InputButton text="Novo jogo!"></InputButton>
+            </>
+          ) : (
+            <div>Perdeu</div>
+          )}
+        </div>
         <button
           onClick={() => {
             console.log(

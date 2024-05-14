@@ -10,3 +10,7 @@
   grid-auto-flow: row; /* Organiza os elementos em linhas */
   background-color: aquamarine;
 }
+
+.winner-false {
+  display: none;
+}
