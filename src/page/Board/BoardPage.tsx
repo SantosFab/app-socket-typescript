@@ -78,11 +78,11 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
       <div className={`BoardPage ${WhoPlays}`}>
         <div className="pointing">
           <p>
-            {Room?.pieceOne} - {Room?.nickNameOne}: {Pointing[0]}
+            {Room?.pieceOne} - {Room?.nickNameOne}: {Room?.pieceOne === 'X' ? Pointing[0] : Pointing[1]}
           </p>
           <p>
             {Room?.idPlayerTwo !== undefined
-              ? `${Room?.pieceTwo} - ${Room?.nickNameTwo}: ${Pointing[1]}`
+              ? `${Room?.pieceTwo} - ${Room?.nickNameTwo}: ${Room.pieceTwo === 'X' ? Pointing[0] : Pointing[1]}`
               : "Aguardando jogador"}
           </p>
         </div>

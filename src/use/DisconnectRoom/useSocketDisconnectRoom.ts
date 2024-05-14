@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   CHANGE_CHAMPION,
   CHANGE_DRAW,
+  CHANGE_POINTING,
   CHANGE_STATE_GAME,
   CHANGE_WHO_PLAYS,
   CHANGE_WINNER,
@@ -34,6 +35,7 @@ const useSocketDisconnectRoom = ({ Room, id }: InterfaceDisconnectRoom) => {
         const newChampion = undefined;
         const newDraw = false;
         const newWinner = false;
+        const newPointing = [0, 0];
         let newRoom: any;
 
         if (socketID === Room.idPlayerOne && Room.idPlayerTwo === undefined) {
@@ -62,6 +64,7 @@ const useSocketDisconnectRoom = ({ Room, id }: InterfaceDisconnectRoom) => {
         socket.emit(CHANGE_CHAMPION, { id, newChampion });
         socket.emit(CHANGE_DRAW, { id, newDraw });
         socket.emit(CHANGE_WINNER, { id, newWinner });
+        socket.emit(CHANGE_POINTING, { id, newPointing });
         socket.emit(USER_LOG_OUT, newRoom, newRoom.index);
         return navigate("/");
       } catch (error) {
