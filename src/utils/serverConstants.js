@@ -12,6 +12,8 @@ const CURRENT_WHO_PLAYS = "currentWhoPlayes";
 const CHANGE_WHO_PLAYS = "changeWhoPlayes";
 const CURRENT_DRAW = "currentDraw";
 const CHANGE_DRAW = "changeDraw";
+const CURRENT_POINTING = "currentPointing";
+const CHANGE_POINTING = "changePointing";
 const CONNECTION = "connection";
 const DISCONNECT = "disconnect";
 const CLOSE_ROOM = "closeRoom";
@@ -34,6 +36,8 @@ module.exports = {
   CHANGE_WHO_PLAYS,
   CURRENT_DRAW,
   CHANGE_DRAW,
+  CURRENT_POINTING,
+  CHANGE_POINTING,
   CONNECTION,
   DISCONNECT,
   CLOSE_ROOM,

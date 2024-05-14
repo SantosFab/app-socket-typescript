@@ -35,3 +35,16 @@
   color: white;
   font-weight: 700;
 }
+
+.pointing {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+}
+
+.pointing p {
+  margin: 0;
+  color: white;
+  font-weight: 700;
+  font-size: 25px;
+}

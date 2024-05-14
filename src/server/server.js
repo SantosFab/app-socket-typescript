@@ -21,6 +21,8 @@ const {
   CURRENT_INIT_GAME,
   USER_LOG_OUT,
   CLOSE_ROOM,
+  CHANGE_POINTING,
+  CURRENT_POINTING,
 } = require("../utils/serverConstants.js");
 
 const app = express();
@@ -130,6 +132,15 @@ io.on(CONNECTION, (socket) => {
   socket.on(CHANGE_DRAW, (data) => {
     try {
       io.to(data.id).emit(CURRENT_DRAW, data.newDraw);
+    } catch (error) {
+      console.error("Ocorreu um error no Draw", error);
+    }
+  });
+
+  socket.on(CHANGE_POINTING, (data) => {
+    try {
+      console.log('chamei o pointing');
+      io.to(data.id).emit(CURRENT_POINTING, data.newPointing);
     } catch (error) {
       console.error("Ocorreu um error no Draw", error);
     }

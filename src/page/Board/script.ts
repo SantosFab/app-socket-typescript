@@ -3,6 +3,7 @@ import { TypePiece } from "../../interface/Type/typePiece";
 import {
   CHANGE_CHAMPION,
   CHANGE_DRAW,
+  CHANGE_POINTING,
   CHANGE_STATE_GAME,
   CHANGE_WHO_PLAYS,
   CHANGE_WINNER,
@@ -10,9 +11,9 @@ import {
 
 const socket = getSocketInstance();
 
-interface interfaceChangePlayer {
-  id: string;
-  piece: string;
+interface interfacePlayerMove {
+  id?: string;
+  piece?: string;
   newStateGame: string[];
   WhoPlays: TypePiece;
 }
@@ -22,7 +23,7 @@ export function playerMove({
   piece,
   newStateGame,
   WhoPlays,
-}: interfaceChangePlayer) {
+}: interfacePlayerMove) {
   if (piece !== WhoPlays) {
     return;
   }
@@ -35,12 +36,12 @@ export function playerMove({
   }
 }
 
-interface CheckWinner {
+interface InterfaceCheckWinner {
   newStateGame: string[];
   id?: string;
 }
 
-export function checkWinner({ newStateGame, id }: CheckWinner) {
+export function checkWinner({ newStateGame, id }: InterfaceCheckWinner) {
   const winningConditions = [
     // Linhas
     [0, 1, 2],
@@ -95,4 +96,21 @@ export function initState({ id }: { id?: string }) {
   socket.emit(CHANGE_CHAMPION, { id, newChampion });
   socket.emit(CHANGE_DRAW, { id, newDraw });
   socket.emit(CHANGE_WINNER, { id, newWinner });
+}
+
+interface InterfaceNewScore {
+  id?: string;
+  Champion?: string;
+  Pointing: number[];
+}
+
+export function newScore({ id, Champion, Pointing }: InterfaceNewScore) {
+  const newPointing = Pointing;
+
+  if (Champion !== undefined && Champion === "X") {
+    newPointing[0] = ++newPointing[0];
+  } else if (Champion !== undefined && Champion === "O") {
+    newPointing[1] = ++newPointing[1];
+  }
+  socket.emit(CHANGE_POINTING, { id, newPointing });
 }

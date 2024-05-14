@@ -3,7 +3,7 @@ import "./BoardPage.css";
 import { useParams } from "react-router-dom";
 import Square from "../../component/Square/Square";
 import useSocketStateGame from "../../use/StateGame/useSocketStateGame";
-import { checkWinner, initState, playerMove } from "./script";
+import { checkWinner, initState, newScore, playerMove } from "./script";
 import useSocketWhoPlays from "../../use/WhoPlays/useSocketWhoPlays";
 import useSocketChampion from "../../use/Champion/useSocketChampion";
 import { TypePiece } from "../../interface/Type/typePiece";
@@ -13,6 +13,7 @@ import useAxiosVerification from "../../use/Verification/useAxiosVerification";
 import { Room } from "../../interface/Room/Room";
 import InputButton from "../../component/InputButton/InputButton";
 import useSocketDisconnectRoom from "../../use/DisconnectRoom/useSocketDisconnectRoom";
+import useSocketPointing from "../../use/Pointing/useSocketPointing";
 
 interface BoardPageProps {}
 
@@ -23,6 +24,7 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
   const [Draw, setDraw] = useState<boolean>(false);
   const [Winner, setWinner] = useState<boolean>(false);
   const [Room, setRoom] = useState<Room>();
+  const [Pointing, setPointing] = useState<number[]>([0, 0]);
 
   const { id, piece, index } = useParams();
 
@@ -33,6 +35,7 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
   useSocketDraw({ setDraw });
   useSocketWinner({ setWinner });
   useSocketDisconnectRoom({ id, Room });
+  useSocketPointing({ setPointing });
 
   const renderSquare = (index: number) => {
     return (
@@ -46,22 +49,43 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
 
           if (piece !== undefined && id !== undefined) {
             newStateGame[index] = piece;
-
-            playerMove({ newStateGame, WhoPlays, id, piece });
-            checkWinner({ newStateGame, id });
+            handlenewMove({ newStateGame });
+            handleHasWinner({ newStateGame });
           }
         }}
       />
     );
   };
 
-  const initialState = () => {
+  const handlenewMove = ({ newStateGame }: { newStateGame: string[] }) => {
+    playerMove({ newStateGame, WhoPlays, id, piece });
+  };
+
+  const handleHasWinner = ({ newStateGame }: { newStateGame: string[] }) => {
+    checkWinner({ newStateGame, id });
+  };
+
+  const handleInitialState = () => {
     initState({ id });
+  };
+
+  const handleHasChampion = () => {
+    newScore({ Champion, Pointing, id });
   };
 
   return (
     <>
       <div className={`BoardPage ${WhoPlays}`}>
+        <div className="pointing">
+          <p>
+            {Room?.pieceOne} - {Room?.nickNameOne}: {Pointing[0]}
+          </p>
+          <p>
+            {Room?.idPlayerTwo !== undefined
+              ? `${Room?.pieceTwo} - ${Room?.nickNameTwo}: ${Pointing[1]}`
+              : "Aguardando jogador"}
+          </p>
+        </div>
         {renderSquare(0)}
         {renderSquare(1)}
         {renderSquare(2)}
@@ -76,7 +100,10 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
           <InputButton
             text="Reiniciar"
             backGroundGreen={true}
-            onClick={() => initialState()}
+            onClick={() => {
+              handleInitialState();
+              handleHasChampion();
+            }}
           />
         </div>
         <div className={`draw-${Draw}`}>
@@ -84,19 +111,9 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
           <InputButton
             text="Reiniciar"
             backGroundRed={true}
-            onClick={() => initialState()}
+            onClick={() => handleInitialState()}
           />
         </div>
-        {/* <button
-          onClick={() => {
-            console.log(
-              `draw:${Draw} - champion:${Champion} - winner:${Winner} - whoPlays:${WhoPlays}`
-            );
-            console.log({ ...Room });
-          }}
-        >
-          Button2
-        </button> */}
       </div>
     </>
   );
