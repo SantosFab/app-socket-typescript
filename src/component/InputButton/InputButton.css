@@ -1,7 +1,9 @@
 .red {
-    background-color: #D21404;
+  background: linear-gradient(to right, rgb(203, 53, 107), rgb(189, 63, 50));
+  border: none;
 }
 
 .green {
-    background-color: #569e47;
+  background-color: #569e47;
+  border: none;
 }

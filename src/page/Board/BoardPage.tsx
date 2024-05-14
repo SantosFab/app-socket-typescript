@@ -3,7 +3,7 @@ import "./BoardPage.css";
 import { useParams } from "react-router-dom";
 import Square from "../../component/Square/Square";
 import useSocketStateGame from "../../use/StateGame/useSocketStateGame";
-import { checkWinner, playerMove } from "./script";
+import { checkWinner, initState, playerMove } from "./script";
 import useSocketWhoPlays from "../../use/WhoPlays/useSocketWhoPlays";
 import useSocketChampion from "../../use/Champion/useSocketChampion";
 import { TypePiece } from "../../interface/Type/typePiece";
@@ -37,7 +37,7 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
   const renderSquare = (index: number) => {
     return (
       <Square
-      piece={piece}
+        piece={piece}
         index={index}
         value={StateGame[index]}
         WhoPlays={WhoPlays}
@@ -55,6 +55,10 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
     );
   };
 
+  const initialState = () => {
+    initState({ id });
+  };
+
   return (
     <>
       <div className={`BoardPage ${WhoPlays}`}>
@@ -69,11 +73,19 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
         {renderSquare(8)}
         <div className={`winner-${Winner}`}>
           {piece === Champion ? <p>Você venceu!</p> : <p>Você perdeu!</p>}
-          <InputButton text="Reiniciar" />
+          <InputButton
+            text="Reiniciar"
+            backGroundGreen={true}
+            onClick={() => initialState()}
+          />
         </div>
         <div className={`draw-${Draw}`}>
           <p>Jogo empatado!</p>
-          <InputButton text="Reiniciar" />
+          <InputButton
+            text="Reiniciar"
+            backGroundRed={true}
+            onClick={() => initialState()}
+          />
         </div>
         {/* <button
           onClick={() => {

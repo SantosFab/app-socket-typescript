@@ -1,11 +1,13 @@
 .RoomCard {
   margin: 10px;
   width: 260px;
+  background: linear-gradient(to right, rgb(58, 123, 213), rgb(0, 210, 255));
+  color: white;
+  border: none;
 }
 
 .RoomCard .card-body {
   height: 166px;
- 
 }
 
 .RoomCard .card-text {
@@ -16,4 +18,11 @@
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+.RoomCard .btn {
+  position: absolute;
+  left: 176px;
+  background-color: rgb(68, 133, 223);
+  border: none;
 }

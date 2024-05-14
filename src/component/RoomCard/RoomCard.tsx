@@ -1,8 +1,9 @@
 import { FunctionComponent, useState } from "react";
-import { Button, Card, Col } from "react-bootstrap";
+import {  Card, Col } from "react-bootstrap";
 import "./RoomCard.css";
 import NewPlayerModal from "../NewPlayerModal/NewPlayerModal";
 import { Room } from "../../interface/Room/Room";
+import InputButton from "../InputButton/InputButton";
 
 interface RoomCardProps {
   room: Room;
@@ -10,7 +11,7 @@ interface RoomCardProps {
 
 const RoomCard: FunctionComponent<RoomCardProps> = ({ room }) => {
   const [ShowNewPlayerModal, setShowNewPlayerModal] = useState<boolean>(false);
-  
+
   return (
     <Col xs="auto">
       <Card className="RoomCard">
@@ -22,17 +23,15 @@ const RoomCard: FunctionComponent<RoomCardProps> = ({ room }) => {
             showModal={ShowNewPlayerModal}
             room={room}
           ></NewPlayerModal>
-          <Button
-            variant="primary"
+          <InputButton
+            text="Entrar"
             disabled={
               room.idPlayerTwo !== undefined && room.idPlayerOne !== undefined
                 ? true
                 : false
             }
             onClick={() => setShowNewPlayerModal(true)}
-          >
-            Entrar
-          </Button>
+          />
         </Card.Body>
       </Card>
     </Col>

@@ -1,10 +1,11 @@
 import { FunctionComponent, useState } from "react";
-import { Button, Container, Row } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import useGetRoomList from "../../use/RoomList/useGetRoomList";
 import RoomCard from "../../component/RoomCard/RoomCard";
 import NewRoomModal from "../../component/NewRoomModal/NewRoomModal";
 import "./RoomPage.css";
 import { Room } from "../../interface/Room/Room";
+import InputButton from "../../component/InputButton/InputButton";
 
 interface RoomPageProps {}
 
@@ -16,7 +17,7 @@ const RoomPage: FunctionComponent<RoomPageProps> = () => {
 
   return (
     <Container className="RoomPage">
-      <Row className="d-flex justify-content-start align-items-start">
+      <Row>
         {RoomList.map((room) => (
           <RoomCard room={room} key={room.id} />
         ))}
@@ -26,7 +27,11 @@ const RoomPage: FunctionComponent<RoomPageProps> = () => {
         showModal={ShowNewRoomModal}
         index={RoomList.length}
       />
-      <Button onClick={() => setShowNewRoomModal(true)}>Criar nova sala</Button>
+      <InputButton
+        text="Nova sala"
+        backGroundRed={true}
+        onClick={() => setShowNewRoomModal(true)}
+      />
       <button onClick={() => console.log(...RoomList)}>button</button>
     </Container>
   );

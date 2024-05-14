@@ -82,3 +82,17 @@ export function checkWinner({ newStateGame, id }: CheckWinner) {
 
   return;
 }
+
+export function initState({ id }: { id?: string }) {
+  const newStateGame = Array(9).fill("");
+  const newWhoPlays = "X";
+  const newChampion = undefined;
+  const newDraw = false;
+  const newWinner = false;
+
+  socket.emit(CHANGE_STATE_GAME, { id, newStateGame });
+  socket.emit(CHANGE_WHO_PLAYS, { id, newWhoPlays });
+  socket.emit(CHANGE_CHAMPION, { id, newChampion });
+  socket.emit(CHANGE_DRAW, { id, newDraw });
+  socket.emit(CHANGE_WINNER, { id, newWinner });
+}

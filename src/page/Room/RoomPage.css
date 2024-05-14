@@ -1,7 +1,19 @@
 .RoomPage {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
   min-height: 100vh;
   flex-direction: column;
+}
+
+.red {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+}
+
+.RoomPage > .row {
+  width: 100%;
+  min-height: 100vh;
+  padding: 150px 0;
 }
