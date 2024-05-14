@@ -1,10 +1,12 @@
 .RoomPage {
   display: flex;
-  justify-content: start;
-  align-items: start;
-  min-height: 100vh;
-  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 70px;
+
 }
+
 
 .red {
   position: fixed;
@@ -12,8 +14,10 @@
   right: 15px;
 }
 
-.RoomPage > .row {
-  width: 100%;
-  min-height: 100vh;
-  padding: 150px 0;
+@media (max-width: 770px) {
+  .flexCards {
+    padding: 50px;
+    justify-content: center;
+    align-items: center;
+  }
 }

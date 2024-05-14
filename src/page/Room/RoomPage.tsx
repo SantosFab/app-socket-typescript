@@ -1,5 +1,5 @@
 import { FunctionComponent, useState } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import useGetRoomList from "../../use/RoomList/useGetRoomList";
 import RoomCard from "../../component/RoomCard/RoomCard";
 import NewRoomModal from "../../component/NewRoomModal/NewRoomModal";
@@ -17,11 +17,10 @@ const RoomPage: FunctionComponent<RoomPageProps> = () => {
 
   return (
     <Container className="RoomPage">
-      <Row>
-        {RoomList.map((room) => (
-          <RoomCard room={room} key={room.id} />
-        ))}
-      </Row>
+      {RoomList.map((room) => (
+        <RoomCard room={room} key={room.id} />
+      ))}
+
       <NewRoomModal
         setShowNewRoomModal={setShowNewRoomModal}
         showModal={ShowNewRoomModal}
@@ -32,7 +31,7 @@ const RoomPage: FunctionComponent<RoomPageProps> = () => {
         backGroundRed={true}
         onClick={() => setShowNewRoomModal(true)}
       />
-      <button onClick={() => console.log(...RoomList)}>button</button>
+      {/* <button onClick={() => console.log(...RoomList)}>button</button> */}
     </Container>
   );
 };

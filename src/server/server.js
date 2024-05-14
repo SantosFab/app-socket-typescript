@@ -139,7 +139,6 @@ io.on(CONNECTION, (socket) => {
 
   socket.on(CHANGE_POINTING, (data) => {
     try {
-      console.log('chamei o pointing');
       io.to(data.id).emit(CURRENT_POINTING, data.newPointing);
     } catch (error) {
       console.error("Ocorreu um error no Draw", error);
