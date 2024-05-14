@@ -3,6 +3,7 @@ import "./Square.css";
 import { TypePiece } from "../../interface/Type/typePiece";
 
 interface SquareProps {
+  piece?: string;
   WhoPlays: TypePiece;
   index: number;
   value: string;
@@ -10,6 +11,7 @@ interface SquareProps {
 }
 
 const Square: FunctionComponent<SquareProps> = ({
+  piece,
   value,
   index,
   WhoPlays,
@@ -17,7 +19,9 @@ const Square: FunctionComponent<SquareProps> = ({
 }) => {
   return (
     <div
-      className={`Square Square-${index} ${value} whoPlays-${WhoPlays}`}
+      className={`Square Square-${index} ${value} whoPlays-${WhoPlays} piece-${
+        piece === WhoPlays
+      }`}
       onClick={onClick}
     ></div>
   );

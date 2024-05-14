@@ -43,8 +43,8 @@
 
 .Square.X::before,
 .Square.X::after,
-.whoPlays-X:not(.Square.x):not(.Square.O):hover::before,
-.whoPlays-X:not(.Square.x):not(.Square.O):hover::after {
+.whoPlays-X:not(.Square.X):not(.Square.O):hover::before,
+.whoPlays-X:not(.Square.X):not(.Square.O):hover::after {
   content: "";
   height: 15px;
   width: 90px;
@@ -73,9 +73,15 @@
   border-radius: 50%;
 }
 
-.whoPlays-X:not(.Square.x):not(.Square.O):hover::before,
-.whoPlays-X:not(.Square.x):not(.Square.O):hover::after,
+.whoPlays-X:not(.Square.X):not(.Square.O):hover::before,
+.whoPlays-X:not(.Square.X):not(.Square.O):hover::after,
 .whoPlays-O:not(.Square.X):not(.Square.O):hover::before,
 .whoPlays-O:not(.Square.X):not(.Square.O):hover::after {
   background: rgba(255, 255, 255, 0.4);
+}
+
+.piece-false:not(.Square.X):not(.Square.O)::before,
+.piece-false:not(.Square.X):not(.Square.O):hover::after {
+  height: 0px !important;
+  width: 0px !important;
 }

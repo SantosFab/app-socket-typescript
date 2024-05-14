@@ -37,7 +37,6 @@ const useSocketDisconnectRoom = ({ Room, id }: InterfaceDisconnectRoom) => {
         let newRoom: any;
 
         if (socketID === Room.idPlayerOne && Room.idPlayerTwo === undefined) {
-          console.log("chamei o método de deletar room");
           socket.emit(CLOSE_ROOM, Room.id, Room.index);
           return navigate("/");
         } else if (socketID === Room?.idPlayerOne) {

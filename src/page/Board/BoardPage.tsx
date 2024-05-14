@@ -26,7 +26,7 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
 
   const { id, piece, index } = useParams();
 
-  useAxiosVerification({ index, piece,setRoom });
+  useAxiosVerification({ index, piece, setRoom });
   useSocketStateGame({ setStateGame });
   useSocketWhoPlays({ setWhoPlays });
   useSocketChampion({ setChampion });
@@ -37,6 +37,7 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
   const renderSquare = (index: number) => {
     return (
       <Square
+      piece={piece}
         index={index}
         value={StateGame[index]}
         WhoPlays={WhoPlays}
@@ -67,16 +68,14 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
         {renderSquare(7)}
         {renderSquare(8)}
         <div className={`winner-${Winner}`}>
-          {piece === Champion ? (
-            <>
-              <p>{Champion} venceu!</p>
-              <InputButton text="Novo jogo!"></InputButton>
-            </>
-          ) : (
-            <div>Perdeu</div>
-          )}
+          {piece === Champion ? <p>Você venceu!</p> : <p>Você perdeu!</p>}
+          <InputButton text="Reiniciar" />
         </div>
-        <button
+        <div className={`draw-${Draw}`}>
+          <p>Jogo empatado!</p>
+          <InputButton text="Reiniciar" />
+        </div>
+        {/* <button
           onClick={() => {
             console.log(
               `draw:${Draw} - champion:${Champion} - winner:${Winner} - whoPlays:${WhoPlays}`
@@ -85,7 +84,7 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
           }}
         >
           Button2
-        </button>
+        </button> */}
       </div>
     </>
   );
