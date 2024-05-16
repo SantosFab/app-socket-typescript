@@ -1,16 +1,12 @@
 .RoomPage {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
   margin: 50px auto 50px auto;
 }
 
-.divCards {
-  display: flex;
-  flex-wrap: wrap;
-}
 
-.red {
+
+.RoomPage .red {
   position: fixed;
   bottom: 15px;
   right: 15px;
