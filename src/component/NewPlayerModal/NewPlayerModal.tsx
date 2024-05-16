@@ -72,11 +72,7 @@ const NewPlayerModal: React.FunctionComponent<NewPlayerModalProps> = ({
                   ---SELECIONAR PEÇA---
                 </option>
                 <option
-                  disabled={
-                    piece === "Ocorreu um erro!"
-                      ? true
-                      : false
-                  }
+                  disabled={piece === "Ocorreu um erro!" ? true : false}
                   value={piece}
                 >
                   {piece}
@@ -93,7 +89,14 @@ const NewPlayerModal: React.FunctionComponent<NewPlayerModalProps> = ({
             <Button type="submit" className="me-2">
               Criar
             </Button>
-            <Button onClick={() => setShowNewPlayerModal(false)}>Fechar</Button>
+            <Button
+              onClick={() => {
+                formik.resetForm();
+                setShowNewPlayerModal(false);
+              }}
+            >
+              Fechar
+            </Button>
           </div>
         </Form>
       </Modal.Body>

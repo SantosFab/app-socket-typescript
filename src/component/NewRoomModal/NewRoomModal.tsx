@@ -103,7 +103,14 @@ const NewRoomModal: React.FunctionComponent<NewRoomModalProps> = ({
             <Button type="submit" className="me-2">
               Criar
             </Button>
-            <Button onClick={() => setShowNewRoomModal(false)}>Fechar</Button>
+            <Button
+              onClick={() => {
+                formik.resetForm();
+                setShowNewRoomModal(false);
+              }}
+            >
+              Fechar
+            </Button>
           </div>
         </Form>
       </Modal.Body>
