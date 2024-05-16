@@ -35,6 +35,7 @@ const useAxiosVerification = ({
           (socketID === Room.idPlayerOne && piece !== Room.pieceOne) ||
           (socketID === Room.idPlayerTwo && piece !== Room.pieceTwo)
         ) {
+          navigate("/");
           return;
         } else if (
           socketID === Room.idPlayerOne ||

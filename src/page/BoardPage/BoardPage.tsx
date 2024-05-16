@@ -34,8 +34,8 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
   useSocketChampion({ setChampion });
   useSocketDraw({ setDraw });
   useSocketWinner({ setWinner });
-  useSocketDisconnectRoom({ id, Room });
   useSocketPointing({ setPointing });
+  useSocketDisconnectRoom({ id, Room });
 
   const renderSquare = (index: number) => {
     return (
@@ -46,6 +46,9 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
         WhoPlays={WhoPlays}
         onClick={() => {
           const newStateGame = [...StateGame];
+          if (newStateGame[index] !== "") {
+            return;
+          }
 
           if (piece !== undefined && id !== undefined) {
             newStateGame[index] = piece;
