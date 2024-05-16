@@ -10,13 +10,17 @@ const socket = getSocketInstance();
 
 const useSocketDraw = ({ setDraw }: InterfaceDraw) => {
   useEffect(() => {
-    socket.on(CURRENT_DRAW, (arg) => {
-      setDraw(arg);
-    });
-
-    return () => {
-      socket.off(CURRENT_DRAW);
-    };
+    try {
+      socket.on(CURRENT_DRAW, (arg) => {
+        setDraw(arg);
+      });
+  
+      return () => {
+        socket.off(CURRENT_DRAW);
+      };
+    } catch (error) {
+      console.error("Ocorreu um erro ao obter o Draw no socket:", error);
+    }
   }, [setDraw]);
 };
 

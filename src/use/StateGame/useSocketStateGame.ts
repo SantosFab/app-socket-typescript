@@ -10,8 +10,9 @@ const socket = getSocketInstance();
 
 const useSocketStateGame = ({ setStateGame }: InterfaceStateGame) => {
   useEffect(() => {
-    // Configurar o ouvinte de eventos para CurrentStateGame
-    socket.on(CURRENT_STATE_GAME, (arg) => {
+   try {
+     // Configurar o ouvinte de eventos para CurrentStateGame
+     socket.on(CURRENT_STATE_GAME, (arg) => {
       setStateGame(arg);
     });
 
@@ -19,6 +20,9 @@ const useSocketStateGame = ({ setStateGame }: InterfaceStateGame) => {
     return () => {
       socket.off(CURRENT_STATE_GAME);
     };
+   } catch (error) {
+    console.error("Ocorreu um erro ao obter o StateGame no socket:", error);
+   }
   }, [setStateGame]);
 };
 

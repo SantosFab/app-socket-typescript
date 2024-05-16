@@ -10,13 +10,17 @@ const socket = getSocketInstance();
 
 const useSocketWinner = ({ setWinner }: InterfaceWinner) => {
   useEffect(() => {
-    socket.on(CURRENT_WINNER, (arg) => {
-      setWinner(arg);
-    });
-
-    return () => {
-      socket.off(CURRENT_WINNER);
-    };
+    try {
+      socket.on(CURRENT_WINNER, (arg) => {
+        setWinner(arg);
+      });
+  
+      return () => {
+        socket.off(CURRENT_WINNER);
+      };
+    } catch (error) {
+      console.error("Ocorreu um erro ao obter o Winner no socket:", error);
+    }
   }, [setWinner]);
 };
 

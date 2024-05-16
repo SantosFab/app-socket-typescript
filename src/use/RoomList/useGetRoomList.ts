@@ -22,16 +22,17 @@ const useGetRoomList = ({ setRoomList }: interfaceRoomList): void => {
         console.error("Error fetching room list:", error);
       }
     };
-
-    socket.on(CURRENT_ROOM_LIST, (data) => {
-      setRoomList(data);
-    });
-
     fetchRoomList();
-
-    return () => {
-      socket.off(CURRENT_ROOM_LIST);
-    };
+    try {
+      socket.on(CURRENT_ROOM_LIST, (data) => {
+        setRoomList(data);
+      });
+      return () => {
+        socket.off(CURRENT_ROOM_LIST);
+      };
+    } catch (error) {
+      console.error("Ocorreu um erro ao obter o RoomList no socket:", error);
+    }
   }, [setRoomList]);
 };
 export default useGetRoomList;

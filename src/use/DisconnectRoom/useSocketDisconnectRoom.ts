@@ -68,16 +68,21 @@ const useSocketDisconnectRoom = ({ Room, id }: InterfaceDisconnectRoom) => {
         socket.emit(USER_LOG_OUT, newRoom, newRoom.index);
         return navigate("/");
       } catch (error) {
-        console.error("Erro ao lidar com o evento de beforeunload:", error);
+        console.error("Erro ao lidar com a função de beforeunload:", error);
       }
     };
-    window.addEventListener("beforeunload", handleDisconnectRoom);
-    return () => {
-      window.removeEventListener("beforeunload", handleDisconnectRoom);
-      window.onpopstate = () => {
-        handleDisconnectRoom();
+
+    try {
+      window.addEventListener("beforeunload", handleDisconnectRoom);
+      return () => {
+        window.removeEventListener("beforeunload", handleDisconnectRoom);
+        window.onpopstate = () => {
+          handleDisconnectRoom();
+        };
       };
-    };
+    } catch (error) {
+      console.error("Erro ao lidar com o evento de beforeunload:", error);
+    }
   }, [Room, navigate, id]);
 };
 

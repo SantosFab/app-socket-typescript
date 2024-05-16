@@ -11,6 +11,7 @@ const socket = getSocketInstance();
 
 const useSocketWhoPlays = ({ setWhoPlays }: InterfaceWhoPlays) => {
   useEffect(() => {
+   try {
     socket.on(CURRENT_WHO_PLAYS, (arg) => {
       setWhoPlays(arg);
     });
@@ -18,6 +19,9 @@ const useSocketWhoPlays = ({ setWhoPlays }: InterfaceWhoPlays) => {
     return () => {
       socket.off(CURRENT_WHO_PLAYS);
     };
+   } catch (error) {
+    console.error("Ocorreu um erro ao obter o WhoPlays no socket:", error);
+   }
   }, [setWhoPlays]);
 };
 

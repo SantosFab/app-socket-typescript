@@ -11,13 +11,17 @@ const socket = getSocketInstance();
 
 const useSocketChampion = ({ setChampion }: InterfaceChampion) => {
   useEffect(() => {
-    socket.on(CURRENT_CHAMPION, (arg) => {
-      setChampion(arg);
-    });
-
-    return () => {
-      socket.off(CURRENT_CHAMPION);
-    };
+    try {
+      socket.on(CURRENT_CHAMPION, (arg) => {
+        setChampion(arg);
+      });
+  
+      return () => {
+        socket.off(CURRENT_CHAMPION);
+      };
+    } catch (error) {
+      console.error("Ocorreu um erro ao obter o Champion no socket:", error);
+    }
   }, [setChampion]);
 };
 
