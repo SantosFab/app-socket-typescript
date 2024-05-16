@@ -22,15 +22,17 @@ const RoomCard: FunctionComponent<RoomCardProps> = ({ room }) => {
           showModal={ShowNewPlayerModal}
           room={room}
         ></NewPlayerModal>
-        <InputButton
-          text="Entrar"
-          disabled={
-            room.idPlayerTwo !== undefined && room.idPlayerOne !== undefined
-              ? true
-              : false
-          }
-          onClick={() => setShowNewPlayerModal(true)}
-        />
+        <div className="divButton">
+          <InputButton
+            text="Entrar"
+            disabled={
+              room.idPlayerTwo !== undefined && room.idPlayerOne !== undefined
+                ? true
+                : false
+            }
+            onClick={() => setShowNewPlayerModal(true)}
+          />
+        </div>
       </Card.Body>
     </Card>
   );

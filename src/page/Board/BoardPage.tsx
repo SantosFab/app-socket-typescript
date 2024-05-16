@@ -58,6 +58,9 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
   };
 
   const handlenewMove = ({ newStateGame }: { newStateGame: string[] }) => {
+    if (Room?.nickNameTwo === undefined || Room.pieceTwo === undefined) {
+      return;
+    }
     playerMove({ newStateGame, WhoPlays, id, piece });
   };
 
@@ -78,11 +81,14 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
       <div className={`BoardPage ${WhoPlays}`}>
         <div className="pointing">
           <p>
-            {Room?.pieceOne} - {Room?.nickNameOne}: {Room?.pieceOne === 'X' ? Pointing[0] : Pointing[1]}
+            {Room?.pieceOne} - {Room?.nickNameOne}:{" "}
+            {Room?.pieceOne === "X" ? Pointing[0] : Pointing[1]}
           </p>
           <p>
             {Room?.idPlayerTwo !== undefined
-              ? `${Room?.pieceTwo} - ${Room?.nickNameTwo}: ${Room.pieceTwo === 'X' ? Pointing[0] : Pointing[1]}`
+              ? `${Room?.pieceTwo} - ${Room?.nickNameTwo}: ${
+                  Room.pieceTwo === "X" ? Pointing[0] : Pointing[1]
+                }`
               : "Aguardando jogador"}
           </p>
         </div>

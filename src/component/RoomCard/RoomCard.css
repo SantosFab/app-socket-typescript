@@ -1,9 +1,10 @@
-div.card {
-  margin: 10px;
-  width: 260px;
+.RoomCard {
+  width: 19%;
+  max-width: 280px;
   background: linear-gradient(to right, rgb(58, 123, 213), rgb(0, 210, 255));
   color: white;
   border: none;
+  margin: 0 6px 12px 6px;
 }
 
 .RoomCard .card-body {
@@ -14,21 +15,48 @@ div.card {
   padding-left: 2px;
 }
 
+.RoomCard .divButton {
+  display: flex;
+  justify-content: end;
+}
+
 .RoomCard .btn {
-  position: absolute;
-  left: 176px;
   background-color: rgb(68, 133, 223);
   border: none;
 }
 
-@media (max-width: 770px) {
-  div.card {
-    width: 200px;
-  }
-
-  .RoomCard .btn {
-   
-    left: 118px;
-    
+@media only screen and (max-width: 1400px) {
+  .RoomCard {
+    width: 23%;
+    margin: 0 11px 22px 11px;
   }
 }
+
+@media only screen and (max-width: 1200px) {
+  .RoomCard {
+    margin: 0 9px 18px 9px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .RoomCard {
+    width: 31%;
+    margin: 0 8px 16px 8px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .RoomCard {
+    width: 47%;
+    margin: 0 7px 14px 7px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .RoomCard {
+    width: 90%;
+    margin: 0 auto 15px auto;
+  }
+}
+
+

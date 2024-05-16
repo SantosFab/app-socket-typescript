@@ -28,8 +28,6 @@ export const useMyFormik = ({ onClick, room }: interfaceMyFormik) => {
     onSubmit: (values, { resetForm }) => {
       const newRoom: Room = { ...values, ...room, idPlayerTwo: socket.id };
 
-      console.log(newRoom);
-
       socket.emit(CHANGE_INIT_GAME, newRoom, newRoom.index, () => {
         onClick(false);
         resetForm();

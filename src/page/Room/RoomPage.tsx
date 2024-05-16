@@ -17,21 +17,22 @@ const RoomPage: FunctionComponent<RoomPageProps> = () => {
 
   return (
     <Container className="RoomPage">
-      {RoomList.map((room) => (
-        <RoomCard room={room} key={room.id} />
-      ))}
+      <div className="divCards">
+        {RoomList.map((room) => (
+          <RoomCard room={room} key={room.id} />
+        ))}
 
-      <NewRoomModal
-        setShowNewRoomModal={setShowNewRoomModal}
-        showModal={ShowNewRoomModal}
-        index={RoomList.length}
-      />
-      <InputButton
-        text="Nova sala"
-        backGroundRed={true}
-        onClick={() => setShowNewRoomModal(true)}
-      />
-      {/* <button onClick={() => console.log(...RoomList)}>button</button> */}
+        <NewRoomModal
+          setShowNewRoomModal={setShowNewRoomModal}
+          showModal={ShowNewRoomModal}
+          index={RoomList.length}
+        />
+        <InputButton
+          text="Nova sala"
+          backGroundRed={true}
+          onClick={() => setShowNewRoomModal(true)}
+        />
+      </div>
     </Container>
   );
 };
