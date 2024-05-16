@@ -87,7 +87,7 @@ const NewPlayerModal: React.FunctionComponent<NewPlayerModalProps> = ({
           </Row>
           <div className="text-end">
             <Button type="submit" className="me-2">
-              Criar
+              Entrar
             </Button>
             <Button
               onClick={() => {

@@ -1,7 +1,7 @@
 const CURRENT_ROOM_LIST = "currentRoomList";
 const CHANGE_ROOM_LIST = "changeRoomList";
-const CHANGE_INIT_GAME = "changeStartGame";
 const CURRENT_INIT_GAME = "currentStartGame";
+const CHANGE_INIT_GAME = "changeStartGame";
 const CURRENT_STATE_GAME = "currentStateGame";
 const CHANGE_STATE_GAME = "changeStateGame";
 const CURRENT_WINNER = "currentWinner";
@@ -15,7 +15,6 @@ const CHANGE_DRAW = "changeDraw";
 const CURRENT_POINTING = "currentPointing";
 const CHANGE_POINTING = "changePointing";
 const CONNECTION = "connection";
-const DISCONNECT = "disconnect";
 const CLOSE_ROOM = "closeRoom";
 const USER_LOG_OUT = "userLogOut";
 
@@ -24,8 +23,8 @@ const PORT = process.env.PORT || 4000;
 module.exports = {
   CURRENT_ROOM_LIST,
   CHANGE_ROOM_LIST,
-  CHANGE_INIT_GAME,
   CURRENT_INIT_GAME,
+  CHANGE_INIT_GAME,
   CURRENT_STATE_GAME,
   CHANGE_STATE_GAME,
   CURRENT_WINNER,
@@ -39,7 +38,6 @@ module.exports = {
   CURRENT_POINTING,
   CHANGE_POINTING,
   CONNECTION,
-  DISCONNECT,
   CLOSE_ROOM,
   USER_LOG_OUT,
   PORT,

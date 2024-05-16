@@ -45,7 +45,7 @@ const BoardPage: FunctionComponent<BoardPageProps> = () => {
         value={StateGame[index]}
         WhoPlays={WhoPlays}
         onClick={() => {
-          let newStateGame = [...StateGame];
+          const newStateGame = [...StateGame];
 
           if (piece !== undefined && id !== undefined) {
             newStateGame[index] = piece;

@@ -5,24 +5,24 @@ const socketIo = require("socket.io");
 const {
   CURRENT_ROOM_LIST,
   CHANGE_ROOM_LIST,
+  CURRENT_INIT_GAME,
   CHANGE_INIT_GAME,
-  CONNECTION,
-  PORT,
   CURRENT_STATE_GAME,
   CHANGE_STATE_GAME,
-  CHANGE_WHO_PLAYS,
-  CURRENT_WHO_PLAYS,
-  CHANGE_WINNER,
   CURRENT_WINNER,
-  CHANGE_CHAMPION,
+  CHANGE_WINNER,
   CURRENT_CHAMPION,
-  CHANGE_DRAW,
+  CHANGE_CHAMPION,
+  CURRENT_WHO_PLAYS,
+  CHANGE_WHO_PLAYS,
   CURRENT_DRAW,
-  CURRENT_INIT_GAME,
-  USER_LOG_OUT,
-  CLOSE_ROOM,
-  CHANGE_POINTING,
+  CHANGE_DRAW,
   CURRENT_POINTING,
+  CHANGE_POINTING,
+  CONNECTION,
+  CLOSE_ROOM,
+  USER_LOG_OUT,
+  PORT,
 } = require("../utils/serverConstants.js");
 
 const app = express();
@@ -80,16 +80,16 @@ io.on(CONNECTION, (socket) => {
     }
   });
 
-  socket.on(CHANGE_INIT_GAME, (newRoom, index, callback) => {
+  socket.on(CHANGE_INIT_GAME, (newInitGame, index, callback) => {
     try {
-      let newArray = [...roomList];
-      newArray[index] = { ...newRoom };
+      const newArray = [...roomList];
+      newArray[index] = { ...newInitGame };
 
       roomList = newArray;
 
-      socket.join(newRoom.id);
+      socket.join(newInitGame.id);
 
-      io.to(newRoom.id).emit(CURRENT_INIT_GAME, newRoom);
+      io.to(newInitGame.id).emit(CURRENT_INIT_GAME, newInitGame);
       io.emit(CURRENT_ROOM_LIST, roomList);
       callback();
     } catch (error) {
@@ -147,7 +147,7 @@ io.on(CONNECTION, (socket) => {
 
   socket.on(USER_LOG_OUT, (newRoom, index) => {
     try {
-      let newArray = [...roomList];
+      const newArray = [...roomList];
       newArray[index] = { ...newRoom };
 
       roomList = newArray;
